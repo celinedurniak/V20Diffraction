@@ -178,9 +178,17 @@ for keyName in myFile.GetListOfKeys():
                 # fill 2d matrice
                 ar_object = np.zeros((axis_x.GetNbins()-1, axis_y.GetNbins()-1))
 
-                for i in range(1, axis_x.GetNbins()):
-                    for j in range(1, axis_y.GetNbins()):
-                        ar_object[i-1, j-1] = mySubObject.GetBinContent(i, j)
+                # invert y axis
+                if tag_invert_y:
+                    for i in range(1, axis_x.GetNbins()):
+                        for j in range(1, axis_y.GetNbins()):
+                            ar_object[i - 1, axis_y.GetNbins() - j - 1] = \
+                                mySubObject.GetBinContent(i, j)
+                # keep original orientation of y-axis
+                else:
+                    for i in range(1, axis_x.GetNbins()):
+                        for j in range(1, axis_y.GetNbins()):
+                            ar_object[i - 1, j - 1] = mySubObject.GetBinContent(i, j)
 
                 # plot
                 fig, ax = plt.subplots()

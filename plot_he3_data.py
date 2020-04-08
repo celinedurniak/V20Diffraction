@@ -16,7 +16,9 @@
 
 # Naming of these files:
 # -  The `bn4` format is a raw data file (event mode) that can be rebinned.
-# Christian Jacobsen (HZG) wrote us a small python script to generate asci files from it, which also generates the filename. So you are completely right: the number indicates the binning size used to histogram the data. I attach the python script as well.
+# Christian Jacobsen (HZG) wrote us a small python script to generate asci files from it, which
+# also generates the filename. So you are completely right: the number indicates the binning size
+# used to histogram the data. I attach the python script as well.
 #
 # - `chX` corresponds to the channel # of the 4 tubes.
 #     a. There are four tubes for diffraction, *i.e.* four channels. TsDau has a total of
@@ -62,7 +64,6 @@ he3sp11ch6 = np.genfromtxt(path_to_he3_files+"Spectrum11.bn4ch6_bin2500.asc")
 he3sp11ch7 = np.genfromtxt(path_to_he3_files+"Spectrum11.bn4ch7_bin2500.asc")
 he3sp11ch8 = np.genfromtxt(path_to_he3_files+"Spectrum11.bn4ch8_bin2500.asc")
 
-#fig.suptitle('Spectrum 11 - data from He3 tubes')
 plt.figtext(0.5, 0.62, 'Spectrum 11', ha='center', va='center')
 ax[1, 0].plot(he3sp11ch3[:, 0], he3sp11ch3[:, 1], label='Ch3')
 ax[1, 0].legend()
@@ -82,9 +83,7 @@ he3sp12ch6 = np.genfromtxt(path_to_he3_files+"Spectrum12.bn4ch6_bin2500.asc")
 he3sp12ch7 = np.genfromtxt(path_to_he3_files+"Spectrum12.bn4ch7_bin2500.asc")
 he3sp12ch8 = np.genfromtxt(path_to_he3_files+"Spectrum12.bn4ch8_bin2500.asc")
 
-#fig, (ax1, ax2) = plt.subplots(2, figsize=(8,10))
 plt.figtext(0.5, 0.35, 'Spectrum 12', ha='center', va='center')
-#fig.suptitle('Spectrum 12 - data from He3 tubes')
 
 ax[2, 0].plot(he3sp12ch3[:, 0], he3sp12ch3[:, 1], label='Ch3')
 ax[2, 0].legend()
