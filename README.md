@@ -82,6 +82,10 @@ Here are short descriptions about these documents:
 - `run_mcstas_sim.py`
    Python script to run a McStas simulation using McStasScript
    
+- `scaling_1d_data.py`
+   Python script which allows affine scaling of x- and y- axes of selected 1D datasets from ROOT, 
+   McStas and He3 tubes
+   
 - `Plot_He3_data.ipynb`
    Notebook to plot ascii files from He3 tubes (after rebinning)
 
