@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see < https://www.gnu.org / licenses/>.
 
-import ROOT
+import uproot
 
 path_to_file = '/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_DreamTeam_Feb2018/DREAMTeam_Feb2018/DENEX/'
 
@@ -33,17 +33,10 @@ dict_root_files = {
 
 ROOTfile,  dir_with_data = dict_root_files['Spectrum03']
 
-myFile = ROOT.TFile.Open(path_to_file + ROOTfile, "read")
-
-for keyName in myFile.GetListOfKeys():
-    myObject = myFile.Get(keyName.GetName())
-    for key in myObject.GetListOfKeys():
-        if "TH1" in key.GetClassName() and 'BoardParam_run_1' in key.GetName():
-            mySubObject = myObject.Get(key.GetName())
-            axis_x = mySubObject.GetXaxis()
-
-            nb_xbins = axis_x.GetNbins()
-            for i in range(1, nb_xbins+1):
-                print(f"{axis_x.GetBinLabel(i)}: {mySubObject.GetBinContent(i)}")
-
-myFile.Close()
+with uproot.open(path_to_file + ROOTfile)[dir_with_data] as myFile:
+    for keyName in myFile.keys():
+        if 'BoardParam_run' in str(keyName):
+            myObject = myFile[keyName]
+            nb_xbins = myObject.numbins
+            for i in range(nb_xbins):
+                print(f"{myObject.xlabels[i]}: {myObject.values[i]}")

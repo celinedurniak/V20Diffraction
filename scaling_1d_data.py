@@ -13,6 +13,7 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
+import uproot
 import matplotlib.pyplot as plt
 from matplotlib.widgets import TextBox, Button, CheckButtons
 import matplotlib.gridspec as gridspec
@@ -38,8 +39,15 @@ xini_mcstas = line_mcstas.get_xdata()
 yini_mcstas = line_mcstas.get_ydata()
 
 # ROOT data H_TOF_dsp_after_run_3
-path_to_root_file = "/Users/celinedurniak/Documents/WorkESS/V20/V20Diffraction_ROOT_ASC_McStas/ROOT1D/Spectrum03_H_TOF_dsp_after_run_3_saved.dat"
-y_root = np.genfromtxt(path_to_root_file)
+path_to_root_file = "/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_DreamTeam_Feb2018/DREAMTeam_Feb2018/DENEX/Spectrum03_DENEX006_1_18-02-05_0000.root"
+data_to_load = "H_TOF_dsp_after_run_3"
+
+with uproot.open(path_to_root_file)["Meas_3"] as myFile:
+    for keyName in myFile.keys():
+        if "TH1I" in str(myFile[keyName]) and data_to_load in str(myFile[keyName]):
+            y_root = myFile[keyName].values
+
+# y_root = np.genfromtxt(path_to_root_file)
 x_root = np.arange(len(y_root))
 line_root, = ax.plot(x_root, y_root, label='root', color=colors_curves[1])
 # store initial values
