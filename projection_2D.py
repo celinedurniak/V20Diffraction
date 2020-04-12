@@ -23,15 +23,15 @@ from matplotlib.widgets import SpanSelector
 
 path_to_root_file = '/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_DreamTeam_Feb2018/DREAMTeam_Feb2018/DENEX/'
 
-ROOTfile = "Spectrum03_DENEX006_1_18-02-05_0000.root"
-dir_with_data = "Meas_3"
+ROOTfile = 'Spectrum03_DENEX006_1_18-02-05_0000.root'
+dir_with_data = 'Meas_3'
 
 data_to_plot = 'H_TOF,X1-X2_User_2D2_dsp_after_run_3'
 
 with uproot.open(path_to_root_file + ROOTfile)[dir_with_data] as myFile:
     for key in myFile.keys():
         # 2D contourplot
-        if "TH2" in str(myFile[key]) and data_to_plot in str(myFile[key]):
+        if 'TH2' in str(myFile[key]) and data_to_plot in str(myFile[key]):
                 # x_max, x_min, y_max, y_min defined from .root file
                 x_min = myFile[key].xlow
                 x_max = myFile[key].xhigh
@@ -59,7 +59,10 @@ fig = plt.figure(num=data_to_plot, figsize=(9, 9))
 
 # 2D plot i.e. contourplot
 ax1 = fig.add_axes([0.09, 0.595, 0.8, 0.395])
-contf = ax1.imshow(arr_object.transpose(), extent=[x_min, x_max, y_min, y_max], origin='lower', aspect='auto')
+contf = ax1.imshow(arr_object.transpose(),
+                   extent=[x_min, x_max, y_min, y_max],
+                   origin='lower',
+                   aspect='auto')
 
 # colorbar
 ax3 = fig.add_axes([.9, 0.595, 0.03, 0.395])

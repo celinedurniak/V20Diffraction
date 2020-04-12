@@ -24,11 +24,11 @@ path_to_file = '/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_Dr
 # Each entry corresponds to the spectrum number, the associated root file
 # and the folder to get the data from
 
-dict_root_files = {'Spectrum03': ("Spectrum03_DENEX006_1_18-02-05_0000.root", "Meas_3"),
-                   'Spectrum08': ("Spectrum08_DENEX006_1_18-02-07_0002.root", "Meas_2"),
-                   'Spectrum09': ("Spectrum09_DENEX006_1_18-02-08_0001.root", "Meas_1"),
-                   'Spectrum11': ("Spectrum11_DENEX006_1_18-02-09_0001.root", "Meas_1"),
-                   'Spectrum12': ("Spectrum12_DENEX006_1_18-02-10_0000.root", "Meas_1")}
+dict_root_files = {'Spectrum03': ('Spectrum03_DENEX006_1_18-02-05_0000.root', 'Meas_3'),
+                   'Spectrum08': ('Spectrum08_DENEX006_1_18-02-07_0002.root', 'Meas_2'),
+                   'Spectrum09': ('Spectrum09_DENEX006_1_18-02-08_0001.root', 'Meas_1'),
+                   'Spectrum11': ('Spectrum11_DENEX006_1_18-02-09_0001.root', 'Meas_1'),
+                   'Spectrum12': ('Spectrum12_DENEX006_1_18-02-10_0000.root', 'Meas_1')}
 
 # Ask user if y-axis should be inverted for 2D data
 reply = ''
@@ -48,11 +48,11 @@ for key_spectrum in dict_root_files.keys():
     with uproot.open(path_to_file + ROOTfile)[dir_with_data] as myFile:
         for key in myFile.keys():
 
-            if key_spectrum == "Spectrum09" and ('1D3' in str(key) or 'FINISHED' in str(key)):
+            if key_spectrum == 'Spectrum09' and ('1D3' in str(key) or 'FINISHED' in str(key)):
                 continue
 
             # 1D line plot
-            if "TH1I" in str(myFile[key]):
+            if 'TH1I' in str(myFile[key]):
                 # do not consider problematic dataset in Spectrum09
 
                 key_name = myFile[key].name.decode('utf-8')
@@ -74,7 +74,7 @@ for key_spectrum in dict_root_files.keys():
                 plt.close(fig)
 
                 # 2D contourplot
-            elif "TH2" in str(myFile[key]):
+            elif 'TH2' in str(myFile[key]):
                 key_name = myFile[key].name.decode('utf-8')
 
                 # extract info about x, y axis (min, max and number of bins)
@@ -94,7 +94,7 @@ for key_spectrum in dict_root_files.keys():
                     arr_object = np.flip(myFile[key].values, 1)
                     # add info about inverted y axis to name of outputs - the extension will be
                     # added later
-                    name_output_file = ROOTfile[:10] + "_" + key_name.replace(',', '_') + "_inv_y"
+                    name_output_file = ROOTfile[:10] + '_' + key_name.replace(',', '_') + '_inv_y'
                 # keep original orientation
                 else:
                     arr_object = myFile[key].values

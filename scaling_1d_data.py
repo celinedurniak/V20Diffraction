@@ -27,11 +27,11 @@ colors_curves = ['#1f77b4', '#ff7f0e', '#2ca02c']
 fig, ax = plt.subplots(figsize=(9, 9))
 fig.suptitle('Enter the formula to modify the x- or y-axes of McStas, ROOT or He3 tubes data',
              fontsize=12)
-ax.title.set_text(r"Only affine transformations are allowed. Index m, r , h refers to McStas, "
-                  r"ROOT and He3, respectively ")
+ax.title.set_text(r'Only affine transformations are allowed. Index m, r , h refers to McStas, '
+                  r'ROOT and He3, respectively ')
 
 # Mcstas data
-path_to_mcstas_file = "/Users/celinedurniak/Documents/WorkESS/V20/V20Diffraction_ROOT_ASC_McStas/V20_config6/monitor_Hetube5.dat"
+path_to_mcstas_file = '/Users/celinedurniak/Documents/WorkESS/V20/V20Diffraction_ROOT_ASC_McStas/V20_config6/monitor_Hetube5.dat'
 x_mcstas, y_mcstas = np.genfromtxt(path_to_mcstas_file, usecols=(0, 1), unpack=True)
 
 line_mcstas, = ax.plot(x_mcstas, y_mcstas, label='mcstas', color=colors_curves[0])
@@ -40,12 +40,12 @@ xini_mcstas = line_mcstas.get_xdata()
 yini_mcstas = line_mcstas.get_ydata()
 
 # ROOT data H_TOF_dsp_after_run_3
-path_to_root_file = "/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_DreamTeam_Feb2018/DREAMTeam_Feb2018/DENEX/Spectrum03_DENEX006_1_18-02-05_0000.root"
-data_to_load = "H_TOF_dsp_after_run_3"
+path_to_root_file = '/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_DreamTeam_Feb2018/DREAMTeam_Feb2018/DENEX/Spectrum03_DENEX006_1_18-02-05_0000.root'
+data_to_load = 'H_TOF_dsp_after_run_3'
 
-with uproot.open(path_to_root_file)["Meas_3"] as myFile:
+with uproot.open(path_to_root_file)['Meas_3'] as myFile:
     for key in myFile.keys():
-        if "TH1I" in str(myFile[key]) and data_to_load in str(myFile[key]):
+        if 'TH1I' in str(myFile[key]) and data_to_load in str(myFile[key]):
             y_root = myFile[key].values
 
 # y_root = np.genfromtxt(path_to_root_file)
@@ -56,7 +56,7 @@ xini_root = line_root.get_xdata()
 yini_root = line_root.get_ydata()
 
 # He3 data
-path_to_he3_file = "/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_DreamTeam_Feb2018/DREAMTeam_Feb2018/TsDau/Spectrum03.bn4ch3_bin2500.asc"
+path_to_he3_file = '/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_DreamTeam_Feb2018/DREAMTeam_Feb2018/TsDau/Spectrum03.bn4ch3_bin2500.asc'
 x_he3, y_he3 = np.genfromtxt(path_to_he3_file, usecols=(0, 1), unpack=True)
 line_he3, = ax.plot(x_he3, y_he3, label='he3', color=colors_curves[2])
 # store initial values

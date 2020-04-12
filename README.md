@@ -54,6 +54,7 @@ Once in the document, just `import uproot` to use its functionalities.
 - on Linux, I had to install something else:
     ```
     conda install -c conda-forge mpich
+    conda install -c anaconda gxx_linux-64
     ```
 
 **Content of the folder**:

@@ -22,11 +22,11 @@ path_to_file = '/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_Dr
 # Each entry corresponds to the spectrum number, the associated root file and
 # the folder to get the data from
 dict_root_files = {
-    'Spectrum03': ("Spectrum03_DENEX006_1_18-02-05_0000.root", "Meas_3"),
-    'Spectrum08': ("Spectrum08_DENEX006_1_18-02-07_0002.root", "Meas_2"),
-    'Spectrum09': ("Spectrum09_DENEX006_1_18-02-08_0001.root", "Meas_1"),
-    'Spectrum11': ("Spectrum11_DENEX006_1_18-02-09_0001.root", "Meas_1"),
-    'Spectrum12': ("Spectrum12_DENEX006_1_18-02-10_0000.root", "Meas_1")
+    'Spectrum03': ('Spectrum03_DENEX006_1_18-02-05_0000.root', 'Meas_3'),
+    'Spectrum08': ('Spectrum08_DENEX006_1_18-02-07_0002.root', 'Meas_2'),
+    'Spectrum09': ('Spectrum09_DENEX006_1_18-02-08_0001.root', 'Meas_1'),
+    'Spectrum11': ('Spectrum11_DENEX006_1_18-02-09_0001.root', "Meas_1"),
+    'Spectrum12': ('Spectrum12_DENEX006_1_18-02-10_0000.root', 'Meas_1')
 }
 
 # Display metadata stored in selected ROOT file

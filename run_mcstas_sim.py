@@ -20,11 +20,11 @@ from mcstasscript.interface import reader
 
 # load McStas instrument file.
 path_to_model = '/Users/celinedurniak/Documents/WorkESS/V20/V20last/'
-InstrReader = reader.McStas_file(path_to_model + "V20_March2020_NAK_Denex.instr")
+InstrReader = reader.McStas_file(path_to_model + 'V20_March2020_NAK_Denex.instr')
 
-InstrReader.write_python_file("generated_mode.py", force=True)
+InstrReader.write_python_file('generated_mode.py', force=True)
 
-demoV20 = instr.McStas_instr("V20diffraction")
+demoV20 = instr.McStas_instr('V20diffraction')
 InstrReader.add_to_instr(demoV20)
 
 demoV20.print_components()
@@ -40,7 +40,7 @@ demoV20.print_component('FOC_2_f')
 demoV20.show_parameters()
 
 # name of the folder where the output data from the simulation will be written
-result_folder = "testV20"
+result_folder = 'testV20'
 
 # With increment_folder_name enabled, a new folder with incremented number is created
 data = demoV20.run_full_instrument(foldername=result_folder,
