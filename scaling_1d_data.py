@@ -13,6 +13,7 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 import uproot
 import matplotlib.pyplot as plt
 from matplotlib.widgets import TextBox, Button, CheckButtons
@@ -43,9 +44,9 @@ path_to_root_file = "/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Da
 data_to_load = "H_TOF_dsp_after_run_3"
 
 with uproot.open(path_to_root_file)["Meas_3"] as myFile:
-    for keyName in myFile.keys():
-        if "TH1I" in str(myFile[keyName]) and data_to_load in str(myFile[keyName]):
-            y_root = myFile[keyName].values
+    for key in myFile.keys():
+        if "TH1I" in str(myFile[key]) and data_to_load in str(myFile[key]):
+            y_root = myFile[key].values
 
 # y_root = np.genfromtxt(path_to_root_file)
 x_root = np.arange(len(y_root))

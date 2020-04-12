@@ -38,25 +38,25 @@ while reply not in ['y', 'n', 'yes', 'no']:
 tag_invert_y = reply.startswith('y')
 
 # Loop over datafiles
-for key_spec in dict_root_files.keys():
-    print(key_spec)
+for key_spectrum in dict_root_files.keys():
+    print(key_spectrum)
 
-    ROOTfile = dict_root_files[key_spec][0]
-    dir_with_data = dict_root_files[key_spec][1]
+    ROOTfile = dict_root_files[key_spectrum][0]
+    dir_with_data = dict_root_files[key_spectrum][1]
 
     # open root file
     with uproot.open(path_to_file + ROOTfile)[dir_with_data] as myFile:
-        for keyName in myFile.keys():
+        for key in myFile.keys():
 
-            if key_spec == "Spectrum09" and ('1D3' in str(keyName) or 'FINISHED' in str(keyName)):
+            if key_spectrum == "Spectrum09" and ('1D3' in str(key) or 'FINISHED' in str(key)):
                 continue
 
             # 1D line plot
-            if "TH1I" in str(myFile[keyName]):
+            if "TH1I" in str(myFile[key]):
                 # do not consider problematic dataset in Spectrum09
 
-                key_name = myFile[keyName].name.decode('utf-8')
-                arr_object = myFile[keyName].values
+                key_name = myFile[key].name.decode('utf-8')
+                arr_object = myFile[key].values
 
                 # naming of outputs - the extension will be added once the format
                 # is chosen (.png or .dat for 1D data)
@@ -74,16 +74,16 @@ for key_spec in dict_root_files.keys():
                 plt.close(fig)
 
                 # 2D contourplot
-            elif "TH2" in str(myFile[keyName]):
-                key_name = myFile[keyName].name.decode('utf-8')
+            elif "TH2" in str(myFile[key]):
+                key_name = myFile[key].name.decode('utf-8')
 
                 # extract info about x, y axis (min, max and number of bins)
-                x_min = myFile[keyName].xlow
-                x_max = myFile[keyName].xhigh
-                bins_x = myFile[keyName].xnumbins
-                y_min = myFile[keyName].ylow
-                y_max = myFile[keyName].yhigh
-                bins_y = myFile[keyName].ynumbins
+                x_min = myFile[key].xlow
+                x_max = myFile[key].xhigh
+                bins_x = myFile[key].xnumbins
+                y_min = myFile[key].ylow
+                y_max = myFile[key].yhigh
+                bins_y = myFile[key].ynumbins
 
                 # create x- and y-axis
                 xaxis = x_min + (x_max - x_min) / (bins_x - 1) * np.arange(bins_x)
@@ -91,13 +91,13 @@ for key_spec in dict_root_files.keys():
 
                 # invert y axis
                 if tag_invert_y:
-                    arr_object = np.flip(myFile[keyName].values, 1)
+                    arr_object = np.flip(myFile[key].values, 1)
                     # add info about inverted y axis to name of outputs - the extension will be
                     # added later
                     name_output_file = ROOTfile[:10] + "_" + key_name.replace(',', '_') + "_inv_y"
                 # keep original orientation
                 else:
-                    arr_object = myFile[keyName].values
+                    arr_object = myFile[key].values
                     # name of outputs - the extension will be added later
                     name_output_file = ROOTfile[:10] + "_" + key_name.replace(',', '_')
                 # plot

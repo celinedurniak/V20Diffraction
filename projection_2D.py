@@ -17,7 +17,6 @@
 # along with this program. If not, see < https://www.gnu.org / licenses/>.
 
 import uproot
-
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import SpanSelector
@@ -30,16 +29,16 @@ dir_with_data = "Meas_3"
 data_to_plot = 'H_TOF,X1-X2_User_2D2_dsp_after_run_3'
 
 with uproot.open(path_to_root_file + ROOTfile)[dir_with_data] as myFile:
-    for keyName in myFile.keys():
+    for key in myFile.keys():
         # 2D contourplot
-        if "TH2" in str(myFile[keyName]) and data_to_plot in str(myFile[keyName]):
+        if "TH2" in str(myFile[key]) and data_to_plot in str(myFile[key]):
                 # x_max, x_min, y_max, y_min defined from .root file
-                x_min = myFile[keyName].xlow
-                x_max = myFile[keyName].xhigh
-                bins_x = myFile[keyName].xnumbins
-                y_min = myFile[keyName].ylow
-                y_max = myFile[keyName].yhigh
-                bins_y = myFile[keyName].ynumbins
+                x_min = myFile[key].xlow
+                x_max = myFile[key].xhigh
+                bins_x = myFile[key].xnumbins
+                y_min = myFile[key].ylow
+                y_max = myFile[key].yhigh
+                bins_y = myFile[key].ynumbins
 
                 # create x- and y-axis
                 deltax = (x_max - x_min)/(bins_x - 1)
@@ -48,7 +47,7 @@ with uproot.open(path_to_root_file + ROOTfile)[dir_with_data] as myFile:
                 yaxis = y_min + deltay * np.arange(bins_y)
 
                 # fill 2d matrice with inverted y-axis
-                arr_object = np.flip(myFile[keyName].values, 1)
+                arr_object = np.flip(myFile[key].values, 1)
 
 # upper boundary for range of vertical values selected for the projection - initial values = full
 # vertical range

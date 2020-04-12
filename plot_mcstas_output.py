@@ -100,12 +100,8 @@ data2d = np.genfromtxt(path_to_model + result_folder + '/' + selected_filename,
 fig, ax = plt.subplots()
 
 contf = ax.imshow(np.flip(data2d, 0), aspect='auto')
-
 ax.set_xlabel(dict_mcstas_files[selected_filename][1])
-
 ax.set_ylabel(dict_mcstas_files[selected_filename][2])
-
 ax.set_title(selected_filename)
-
 cbar = fig.colorbar(contf)
 plt.show()

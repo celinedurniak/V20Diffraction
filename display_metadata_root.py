@@ -34,9 +34,9 @@ dict_root_files = {
 ROOTfile,  dir_with_data = dict_root_files['Spectrum03']
 
 with uproot.open(path_to_file + ROOTfile)[dir_with_data] as myFile:
-    for keyName in myFile.keys():
-        if 'BoardParam_run' in str(keyName):
-            myObject = myFile[keyName]
+    for key in myFile.keys():
+        if 'BoardParam_run' in str(key):
+            myObject = myFile[key]
             nb_xbins = myObject.numbins
             for i in range(nb_xbins):
                 print(f"{myObject.xlabels[i]}: {myObject.values[i]}")
