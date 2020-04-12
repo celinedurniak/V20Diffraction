@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see < https://www.gnu.org / licenses/>.
 
-import ROOT
+import uproot
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -23,10 +23,10 @@ path_to_file = '/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_Dr
 # Create dictionary to generate plots
 # Each entry corresponds to the spectrum number, the associated root file
 # and the folder to get the data from
-# Spectrum09 is dealt with separately at the end of the script
 
 dict_root_files = {'Spectrum03': ("Spectrum03_DENEX006_1_18-02-05_0000.root", "Meas_3"),
                    'Spectrum08': ("Spectrum08_DENEX006_1_18-02-07_0002.root", "Meas_2"),
+                   'Spectrum09': ("Spectrum09_DENEX006_1_18-02-08_0001.root", "Meas_1"),
                    'Spectrum11': ("Spectrum11_DENEX006_1_18-02-09_0001.root", "Meas_1"),
                    'Spectrum12': ("Spectrum12_DENEX006_1_18-02-10_0000.root", "Meas_1")}
 
@@ -45,165 +45,70 @@ for key_spec in dict_root_files.keys():
     dir_with_data = dict_root_files[key_spec][1]
 
     # open root file
-    myFile = ROOT.TFile.Open(path_to_file + ROOTfile, "read")
+    with uproot.open(path_to_file + ROOTfile)[dir_with_data] as myFile:
+        for keyName in myFile.keys():
 
-    for keyName in myFile.GetListOfKeys():
-        myObject = myFile.Get(keyName.GetName())
+            if key_spec == "Spectrum09" and ('1D3' in str(keyName) or 'FINISHED' in str(keyName)):
+                continue
 
-        if dir_with_data in str(myObject):
-            for key in myObject.GetListOfKeys():
-                # 1D line plot
-                if "TH1I" in key.GetClassName():
-                    mySubObject = myObject.Get(key.GetName())
+            # 1D line plot
+            if "TH1I" in str(myFile[keyName]):
+                # do not consider problematic dataset in Spectrum09
 
-                    # extract data
-                    axis_x = mySubObject.GetXaxis()
+                key_name = myFile[keyName].name.decode('utf-8')
+                arr_object = myFile[keyName].values
 
-                    ar_object = np.zeros(axis_x.GetNbins() - 1)
-                    for i in range(1, axis_x.GetNbins()):
-                        ar_object[i - 1] = mySubObject.GetBinContent(i)
-
-                    # plot
-                    fig, ax = plt.subplots()
-                    ax.plot(ar_object)
-                    ax.set_title(key_spec + " " + key.GetName())
-
-                    # save plot
-                    plt.savefig(ROOTfile[:10] + key.GetName().replace(',', '_') + '.png')
-                    # to display the plot uncomment the line below
-                    # plt.show()
-                    plt.close(fig)
-
-                # 2D contourplot
-                elif "TH2" in key.GetClassName():
-
-                    mySubObject = myObject.Get(key.GetName())
-
-                    # extract data
-                    axis_x = mySubObject.GetXaxis()
-                    axis_y = mySubObject.GetYaxis()
-
-                    # create x- and y-axis
-                    xaxis = axis_x.GetXmin() \
-                            + (axis_x.GetXmax() - axis_x.GetXmin()) / (
-                                        axis_x.GetNbins() - 2) * np.arange(axis_x.GetNbins() - 1)
-                    yaxis = axis_y.GetXmin() \
-                            + (axis_y.GetXmax() - axis_y.GetXmin()) / (
-                                        axis_y.GetNbins() - 2) * np.arange(axis_y.GetNbins() - 1)
-
-                    # fill 2d matrice
-                    ar_object = np.zeros((axis_x.GetNbins() - 1, axis_y.GetNbins() - 1))
-
-                    # invert y axis
-                    if tag_invert_y:
-                        for i in range(1, axis_x.GetNbins()):
-                            for j in range(1, axis_y.GetNbins()):
-                                ar_object[i - 1, axis_y.GetNbins() - j - 1] = \
-                                    mySubObject.GetBinContent(i, j)
-                    # keep original orientation of y-axis
-                    else:
-                        for i in range(1, axis_x.GetNbins()):
-                            for j in range(1, axis_y.GetNbins()):
-                                ar_object[i - 1, j - 1] = mySubObject.GetBinContent(i, j)
-
-                    # plot
-                    fig, ax = plt.subplots()
-                    CS = ax.contourf(xaxis, yaxis, ar_object.transpose(),
-                                     cmap=plt.cm.get_cmap('gist_earth'))
-                    ax.set_title(key_spec + " " + key.GetName())
-                    cbar = fig.colorbar(CS)
-
-                    # save plot
-                    plt.savefig(ROOTfile[:10] + key.GetName().replace(',', '_') + '.png')
-                    # to display the plot uncomment the line below
-                    # plt.show()
-                    plt.close(fig)
-
-    myFile.Close()
-
-
-# Specific handling of Spectrum09: issue with one dataset
-ROOTfile = "Spectrum09_DENEX006_1_18-02-08_0001.root"
-dir_with_data = "Meas_1"
-
-print("Spectrum09")
-myFile = ROOT.TFile.Open(path_to_file + ROOTfile, "read")
-
-for keyName in myFile.GetListOfKeys():
-    myObject = myFile.Get(keyName.GetName())
-
-    if dir_with_data in str(myObject):
-
-        for key in myObject.GetListOfKeys():
-
-            # 1D line plot - discard plotting buggy data
-            if "TH1I" in key.GetClassName() and not '1D3' in key.GetName():
-                mySubObject = myObject.Get(key.GetName())
-
-                # extract data
-                axis_x = mySubObject.GetXaxis()
-
-                ar_object = np.zeros(axis_x.GetNbins()-1)
-                for i in range(1, axis_x.GetNbins()):
-                    ar_object[i-1]=mySubObject.GetBinContent(i)
+                # naming of outputs - the extension will be added once the format
+                # is chosen (.png or .dat for 1D data)
+                name_output_file = ROOTfile[:10] + key_name.replace(',', '_')
 
                 # plot
                 fig, ax = plt.subplots()
-                ax.plot(ar_object)
-                ax.set_title("Spectrum09" + " " + key.GetName())
+                ax.plot(arr_object)
+                ax.set_title(key_name)
 
                 # save plot
-                plt.savefig(ROOTfile[:10] + key.GetName().replace(',', '_') + '.png')
+                plt.savefig(name_output_file + '.png')
                 # to display the plot uncomment the line below
                 # plt.show()
-                plt.close()
+                plt.close(fig)
 
-            # 2D contourplot
-            elif "TH2" in key.GetClassName():
+                # 2D contourplot
+            elif "TH2" in str(myFile[keyName]):
+                key_name = myFile[keyName].name.decode('utf-8')
 
-                mySubObject = myObject.Get(key.GetName())
-
-                # extract data
-                axis_x = mySubObject.GetXaxis()
-                axis_y = mySubObject.GetYaxis()
+                # extract info about x, y axis (min, max and number of bins)
+                x_min = myFile[keyName].xlow
+                x_max = myFile[keyName].xhigh
+                bins_x = myFile[keyName].xnumbins
+                y_min = myFile[keyName].ylow
+                y_max = myFile[keyName].yhigh
+                bins_y = myFile[keyName].ynumbins
 
                 # create x- and y-axis
-                xaxis = axis_x.GetXmin() \
-                    + (axis_x.GetXmax() - axis_x.GetXmin()) \
-                    / (axis_x.GetNbins()-2)*np.arange(axis_x.GetNbins() - 1)
-                yaxis = axis_y.GetXmin() \
-                    + (axis_y.GetXmax() - axis_y.GetXmin()) \
-                    / (axis_y.GetNbins() - 2) * np.arange(axis_y.GetNbins()-1)
-
-                # fill 2d matrice
-                ar_object = np.zeros((axis_x.GetNbins()-1, axis_y.GetNbins()-1))
+                xaxis = x_min + (x_max - x_min) / (bins_x - 1) * np.arange(bins_x)
+                yaxis = y_min + (y_max - y_min) / (bins_y - 1) * np.arange(bins_y)
 
                 # invert y axis
                 if tag_invert_y:
-                    for i in range(1, axis_x.GetNbins()):
-                        for j in range(1, axis_y.GetNbins()):
-                            ar_object[i - 1, axis_y.GetNbins() - j - 1] = \
-                                mySubObject.GetBinContent(i, j)
-                # keep original orientation of y-axis
+                    arr_object = np.flip(myFile[keyName].values, 1)
+                    # add info about inverted y axis to name of outputs - the extension will be
+                    # added later
+                    name_output_file = ROOTfile[:10] + "_" + key_name.replace(',', '_') + "_inv_y"
+                # keep original orientation
                 else:
-                    for i in range(1, axis_x.GetNbins()):
-                        for j in range(1, axis_y.GetNbins()):
-                            ar_object[i - 1, j - 1] = mySubObject.GetBinContent(i, j)
-
+                    arr_object = myFile[keyName].values
+                    # name of outputs - the extension will be added later
+                    name_output_file = ROOTfile[:10] + "_" + key_name.replace(',', '_')
                 # plot
                 fig, ax = plt.subplots()
-                CS = ax.contourf(xaxis,
-                                 yaxis,
-                                 ar_object.transpose(),
+                CS = ax.contourf(xaxis, yaxis, arr_object.transpose(),
                                  cmap=plt.cm.get_cmap('gist_earth'))
-
-                ax.set_title("Spectrum09" + " " + key.GetName())
+                ax.set_title(key_name)
                 cbar = fig.colorbar(CS)
 
                 # save plot
-                plt.savefig(ROOTfile[:10] + key.GetName().replace(',', '_') + '.png')
+                plt.savefig(name_output_file + '.png')
                 # to display the plot uncomment the line below
                 # plt.show()
-                plt.close()
-
-myFile.Close()
+                plt.close(fig)

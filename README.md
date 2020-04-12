@@ -3,34 +3,37 @@ data recorded at V20 in February 2018, when diffraction experiments were perform
 
 There are different ways to use ROOT. Installation instructions can be found at 
 https://root.cern.ch/root/html534/guides/users-guide/InstallandBuild.html#installing-precompiled-binaries. 
-But here, in order to be able to use Python3 as well, we will create a conda environment. 
-These instructions can be used to install on MacOS or Linux. Unfortunately there is no `root` conda 
-package available for Windows.  
+But here, in order to be able to use Python3 as well, we will create a conda environment using 
+[`uproot`](https://github.com/scikit-hep/uproot#compressed-objects-in-root-files).
+These instructions can be used to install on MacOS, Linux and Windows. Windows' support is the 
+reason why we are going to use `uproot` instead of the ROOT conda package, which is not available
+on Windows.
+
 Here are the steps to follow:  
 
 - install anaconda or miniconda (see [link](https://docs.conda.io/projects/conda/en/latest/user-guide/install/download.html))
 
 - create an environment, typing the following 2 lines in a terminal:
     ```
-    conda create -n cern_root_env -c conda-forge root matplotlib ipywidgets
-    conda activate cern_root_env
+    conda create -n v20_root_env -c conda-forge uproot matplotlib jupyter ipywidgets
+    conda activate v20_root_env
     ```
 
-- activate your environment, called `cern_root_env` in this example (but you can choose something 
+- activate your environment, called `v20_root_env` in this example (but you can choose something 
   else)
   
 - install `McStasScript` following the instructions at [link](https://github.com/PaNOSC-ViNYL/McStasScript).
 
-That's it. ROOT provides Jupyter notebooks. To run such a document, type the following command in 
-a terminal
+That's it. You can now use either a Python script or a Jupyter notebook. To open the latter, type 
+the following command in a terminal
 
    ```
-   root --notebook 
+   jupyter notebook
    ```
 
 and then either select an existing notebook or create a new one.
 
-Once in the document, just `import ROOT` to use its functionalities.
+Once in the document, just `import uproot` to use its functionalities.
 
 **Comments**:  
 
@@ -42,10 +45,10 @@ Once in the document, just `import ROOT` to use its functionalities.
     ```
 - to remove the environmwent:
     ```
-    conda remove -n cern_root_env --all
+    conda remove -n v20_root_env --all
     ```
   
-- another way to use ROOT and Python is to write Python scripts importing ROOT and running these 
+- another way to use ROOT and Python is to write Python scripts importing `uproot` and running these 
   scripts in the activated environment created above.
 
 - on Linux, I had to install something else:

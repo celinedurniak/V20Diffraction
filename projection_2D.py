@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see < https://www.gnu.org / licenses/>.
 
-import ROOT
+import uproot
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -29,70 +29,48 @@ dir_with_data = "Meas_3"
 
 data_to_plot = 'H_TOF,X1-X2_User_2D2_dsp_after_run_3'
 
-# read .root file
-myFile = ROOT.TFile.Open(path_to_root_file + ROOTfile, "read")
-
-for keyName in myFile.GetListOfKeys():
-    myObject = myFile.Get(keyName.GetName())
-    if dir_with_data in str(myObject):
-        for key in myObject.GetListOfKeys():
-            # 2D contourplot
-            if "TH2" in key.GetClassName() and data_to_plot in key.GetName():
-
-                mySubObject = myObject.Get(key.GetName())
-                # extract data
-                axis_x = mySubObject.GetXaxis()
-                axis_y = mySubObject.GetYaxis()
-
-                h1 = mySubObject.ProjectionX()
-
-                # xmax, xmin, ymax, ymin defined from .root file
-                # and used for the user input validator
-                xmin = axis_x.GetXmin()
-                xmax = axis_x.GetXmax()
-                ymin = axis_y.GetXmin()
-                ymax = axis_y.GetXmax()
-
-                nb_xbins = axis_x.GetNbins()
-                nb_ybins = axis_y.GetNbins()
+with uproot.open(path_to_root_file + ROOTfile)[dir_with_data] as myFile:
+    for keyName in myFile.keys():
+        # 2D contourplot
+        if "TH2" in str(myFile[keyName]) and data_to_plot in str(myFile[keyName]):
+                # x_max, x_min, y_max, y_min defined from .root file
+                x_min = myFile[keyName].xlow
+                x_max = myFile[keyName].xhigh
+                bins_x = myFile[keyName].xnumbins
+                y_min = myFile[keyName].ylow
+                y_max = myFile[keyName].yhigh
+                bins_y = myFile[keyName].ynumbins
 
                 # create x- and y-axis
-                deltax = (xmax - xmin)/(nb_xbins-2)
-                xaxis = xmin + deltax * np.arange(nb_xbins-1)
-                deltay = (ymax - ymin)/(nb_ybins - 2)
-                yaxis = ymin + deltay * np.arange(nb_ybins-1)
+                deltax = (x_max - x_min)/(bins_x - 1)
+                xaxis = x_min + deltax * np.arange(bins_x)
+                deltay = (y_max - y_min)/(bins_y - 1)
+                yaxis = y_min + deltay * np.arange(bins_y)
 
-                # fill 2d matrice
-                arr = np.zeros((axis_x.GetNbins() - 1, axis_y.GetNbins() - 1))
-
-                # invert y axis
-                for i in range(1, axis_x.GetNbins()):
-                    for j in range(1, axis_y.GetNbins()):
-                        arr[i - 1, axis_y.GetNbins() - j - 1] = mySubObject.GetBinContent(i, j)
-myFile.Close()
-
+                # fill 2d matrice with inverted y-axis
+                arr_object = np.flip(myFile[keyName].values, 1)
 
 # upper boundary for range of vertical values selected for the projection - initial values = full
 # vertical range
-new_ymax = int(ymax)
-new_ymin = int(ymin)
+new_ymax = int(y_max)
+new_ymin = int(y_min)
 
 # Set up figure
 fig = plt.figure(num=data_to_plot, figsize=(9, 9))
 
 # 2D plot i.e. contourplot
 ax1 = fig.add_axes([0.09, 0.595, 0.8, 0.395])
-contf = ax1.imshow(arr.transpose(), extent=[xmin, xmax, ymin, ymax], origin='lower', aspect='auto')
+contf = ax1.imshow(arr_object.transpose(), extent=[x_min, x_max, y_min, y_max], origin='lower', aspect='auto')
 
 # colorbar
 ax3 = fig.add_axes([.9, 0.595, 0.03, 0.395])
 cb = plt.colorbar(contf, ax=ax1, cax=ax3)
 
 # 1D plot i.e. projection
-projection_1d = np.sum(arr, axis=1)
+projection_1d = np.sum(arr_object, axis=1)
 ax2 = fig.add_axes([0.09, 0.135, 0.8, 0.395])
 ax2.plot(projection_1d)
-ax2.set_xlim([xmin, xmax])
+ax2.set_xlim([x_min, x_max])
 ax2.grid()
 ax2.annotate('Press left mouse button on 2D plot to select area to calculate 1D projection',
              xy=(0.5, 0), xycoords='axes fraction',
@@ -101,29 +79,30 @@ ax2.annotate('Press left mouse button on 2D plot to select area to calculate 1D 
              verticalalignment='bottom')
 
 
-def onselect(ymin, ymax):
-    index_max_projection = (np.abs(yaxis - ymax)).argmin()
-    index_min_projection = (np.abs(yaxis - ymin)).argmin()
-    tr_arr = arr[:, index_min_projection:index_max_projection]
+def onselect(y_min, y_max):
+    index_max_projection = (np.abs(yaxis - y_max)).argmin()
+    index_min_projection = (np.abs(yaxis - y_min)).argmin()
+    tr_arr = arr_object[:, index_min_projection:index_max_projection]
     projection_1d = np.sum(tr_arr, axis=1)
 
     ax2.clear()
     ax2.grid()
-    ax2.set_xlim([xmin, xmax])
+    ax2.set_xlim([x_min, x_max])
     ax2.plot(projection_1d, color='red')
 
-    ax2.annotate(f"ymin: {ymin:.2f}, ymax: {ymax:.2f}",
+    ax2.annotate(f"ymin: {y_min:.2f}, ymax: {y_max:.2f}",
                  xy=(1, 0), xycoords='axes fraction',
                  xytext=(-20, -90), textcoords='offset pixels',
                  horizontalalignment='right',
                  verticalalignment='bottom')
 
-    print(f"ymin: {ymin}, ymax: {ymax}")
+    print(f"ymin: {y_min}, ymax: {y_max}")
     fig.canvas.draw_idle()
 
     # save 1d projection
     np.savetxt("projection1D.out", projection_1d, fmt='%.4f',
-               header=f"root file: {ROOTfile}, dataset: {data_to_plot} ymin: {ymin}, ymax: {ymax}")
+               header=f"root file: {ROOTfile}, dataset: {data_to_plot} ymin: {y_min}, ymax: {y_max}")
+
 
 span = SpanSelector(ax1, onselect=onselect, direction='vertical',
                     useblit=True, span_stays=True, button=1,
