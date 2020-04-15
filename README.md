@@ -24,6 +24,9 @@ Here are the steps to follow:
   
 - install `McStasScript` following the instructions at [link](https://github.com/PaNOSC-ViNYL/McStasScript).
 
+- if you want to convert datasets stored in ROOT files to tiff images, install Pillow using 
+  `python3 -m pip install --upgrade Pillow`
+
 That's it. You can now use either a Python script or a Jupyter notebook. To open the latter, type 
 the following command in a terminal
 
