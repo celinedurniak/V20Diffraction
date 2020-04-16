@@ -114,13 +114,59 @@ def hide_curve(label):
     plt.draw()
 
 
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        pass
+
+
 def validate_formula(formula):
     """
     Check validity of input formula
     Only affine transformation is allowed
+    These types of expressions are accepted:
+    ±x, ±a * x ± b, x / a ± b where a, b are numbers (scientific notation allowed)
+    The above formulae also apply for 'y' instead of x
     """
-    # TODO
-    pass
+    # check that x xor y in expression and split formula into term before and after 'x' or 'y'
+    if ('x' in formula and not 'y' in formula) or ('y' in formula and not 'x' in formula):
+        elements_formula = re.split("[yx]{1}", formula)
+
+        # Result of splitting should give two elements at most (could be empty strings)
+        if len(elements_formula) != 2:
+            return False
+        else:
+            # check the first element (before 'x' or 'y'):
+            # it could be +, - or nothing
+            if elements_formula[0] in ['', '+', '-']:
+                check_first_element = True
+            # or +alpha* or -alpha* where alpha is a number
+            else:
+                if elements_formula[0][-1] == '*' \
+                        and is_number(elements_formula[0][:-1]):
+                    check_first_element = True
+                else:
+                    check_first_element = False
+
+            # check second element:
+            # it could be empty
+            if elements_formula[1] == '':
+                check_second_element = True
+            # or ±b(±a), /a±b, *a±b where a,b are numbers
+            else:
+                if elements_formula[1][0] in ['+', '-', '/', '*']:
+                    # check that the last term contains only addition or subtraction of numbers
+                    split_2nd_element = re.split("[+-]{1}", elements_formula[1][1:])
+                    all(is_number(item) for item in split_2nd_element)
+                    check_second_element = True
+                else:
+                    check_second_element = False
+
+        return check_first_element and check_second_element
+    else:
+        return False
 
 
 def rescale_plot_range():
@@ -137,73 +183,61 @@ def submit_abx_mcstas(val):
     """
     modify x values of mcstas curve with scaling and offset factors
     """
-    # TODO add validation of formula
-
-    x_output = [eval(val) for x in xini_mcstas]
-
-    line_mcstas.set_xdata(x_output)
-    rescale_plot_range()
+    if validate_formula(val):
+        x_output = [eval(val) for x in xini_mcstas]
+        line_mcstas.set_xdata(x_output)
+        rescale_plot_range()
 
 
 def submit_aby_mcstas(val):
     """
     modify y values of mcstas curve with scaling and offset factors
     """
+    if validate_formula(val):
+        y_output = [eval(val) for y in yini_mcstas]
 
-    # TODO add validation of formula
-
-    y_output = [eval(val) for y in yini_mcstas]
-
-    line_mcstas.set_ydata(y_output)
-    rescale_plot_range()
+        line_mcstas.set_ydata(y_output)
+        rescale_plot_range()
 
 
 def submit_abx_root(val):
     """
     modify x values of root curve with scaling and offset factors
     """
-    # TODO add validation of formula
-
-    x_output = [eval(val) for x in xini_root]
-
-    line_root.set_xdata(x_output)
-    rescale_plot_range()
+    if validate_formula(val):
+        x_output = [eval(val) for x in xini_root]
+        line_root.set_xdata(x_output)
+        rescale_plot_range()
 
 
 def submit_aby_root(val):
     """
     modify y values of root curve with scaling and offset factors
     """
-    # TODO add validation of formula
-
-    y_output = [eval(val) for y in yini_root]
-
-    line_root.set_ydata(y_output)
-    rescale_plot_range()
+    if validate_formula(val):
+        y_output = [eval(val) for y in yini_root]
+        line_root.set_ydata(y_output)
+        rescale_plot_range()
 
 
 def submit_abx_he3(val):
     """
     modify x values of he3 tube curve with scaling and offset factors
     """
-    # TODO add validation of formula
-
-    x_output = [eval(val) for x in xini_he3]
-
-    line_he3.set_xdata(x_output)
-    rescale_plot_range()
+    if validate_formula(val):
+        x_output = [eval(val) for x in xini_he3]
+        line_he3.set_xdata(x_output)
+        rescale_plot_range()
 
 
 def submit_aby_he3(val):
     """
     modify y values of he3 tube curve with scaling and offset factors
     """
-    # TODO add validation of formula
-
-    y_output = [eval(val) for y in yini_he3]
-
-    line_he3.set_ydata(y_output)
-    rescale_plot_range()
+    if validate_formula(val):
+        y_output = [eval(val) for y in yini_he3]
+        line_he3.set_ydata(y_output)
+        rescale_plot_range()
 
 
 def submit_reset(event):
