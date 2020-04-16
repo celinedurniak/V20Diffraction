@@ -18,7 +18,10 @@ import uproot
 import numpy as np
 import matplotlib.pyplot as plt
 
-path_to_file = '/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_DreamTeam_Feb2018/DREAMTeam_Feb2018/DENEX/'
+# to save tiff files
+from PIL import Image
+
+path_to_file = '/Users/celinedurniak/V20DiffractionData/DENEX/'
 
 # Create dictionary to generate plots
 # Each entry corresponds to the spectrum number, the associated root file
@@ -31,11 +34,35 @@ dict_root_files = {'Spectrum03': ('Spectrum03_DENEX006_1_18-02-05_0000.root', 'M
                    'Spectrum12': ('Spectrum12_DENEX006_1_18-02-10_0000.root', 'Meas_1')}
 
 # Ask user if y-axis should be inverted for 2D data
-reply = ''
-while reply not in ['y', 'n', 'yes', 'no']:
-    reply = str(input('Invert y axis of 2D plots (y/n)? ')).lower().strip()
+reply_invert_y = ''
+while reply_invert_y not in ['y', 'n', 'yes', 'no']:
+    reply_invert_y = str(input('Invert y axis of 2D plots (y/n)? ')).lower().strip()
+tag_invert_y = reply_invert_y.startswith('y')
 
-tag_invert_y = reply.startswith('y')
+reply_save_1d_dat = ''
+while reply_save_1d_dat not in ['y', 'n', 'yes', 'no']:
+    reply_save_1d_dat = str(input('Save 1D data to ascii files (y/n)? ')).lower().strip()
+tag_save_1d_dat = reply_save_1d_dat.startswith('y')
+
+reply_save_1d_png = ''
+while reply_save_1d_png not in ['y', 'n', 'yes', 'no']:
+    reply_save_1d_png = str(input('Save 1D data to png files (y/n)? ')).lower().strip()
+tag_save_1d_png = reply_save_1d_png.startswith('y')
+
+reply_save_2d_dat = ''
+while reply_save_2d_dat not in ['y', 'n', 'yes', 'no']:
+    reply_save_2d_dat = str(input('Save 2D data to ascii files (y/n)? ')).lower().strip()
+tag_save_2d_dat = reply_save_2d_dat.startswith('y')
+
+reply_save_2d_png = ''
+while reply_save_2d_png not in ['y', 'n', 'yes', 'no']:
+    reply_save_2d_png = str(input('Save 2D data to png files (y/n)? ')).lower().strip()
+tag_save_2d_png = reply_save_2d_png.startswith('y')
+
+reply_save_2d_tif = ''
+while reply_save_2d_tif not in ['y', 'n', 'yes', 'no']:
+    reply_save_2d_tif = str(input('Save 2D data to tiff files (y/n)? ')).lower().strip()
+tag_save_2d_tif = reply_save_2d_tif.startswith('y')
 
 # Loop over datafiles
 for key_spectrum in dict_root_files.keys():
@@ -66,14 +93,17 @@ for key_spectrum in dict_root_files.keys():
                 fig, ax = plt.subplots()
                 ax.plot(arr_object)
                 ax.set_title(key_name)
+                # plt.show()
 
                 # save plot
-                plt.savefig(name_output_file + '.png')
-                # to display the plot uncomment the line below
-                # plt.show()
-                plt.close(fig)
+                if tag_save_1d_png:
+                    fig.savefig(name_output_file + '.png')
+                    plt.close()
 
-                # 2D contourplot
+                if tag_save_1d_dat:
+                    np.savetxt(name_output_file + '.dat', arr_object, fmt="%d")
+
+            # 2D contourplot
             elif 'TH2' in str(myFile[key]):
                 key_name = myFile[key].name.decode('utf-8')
 
@@ -100,15 +130,25 @@ for key_spectrum in dict_root_files.keys():
                     arr_object = myFile[key].values
                     # name of outputs - the extension will be added later
                     name_output_file = ROOTfile[:10] + "_" + key_name.replace(',', '_')
+
                 # plot
                 fig, ax = plt.subplots()
-                CS = ax.contourf(xaxis, yaxis, arr_object.transpose(),
+                CS = ax.contourf(xaxis,
+                                 yaxis,
+                                 arr_object.transpose(),
                                  cmap=plt.cm.get_cmap('gist_earth'))
                 ax.set_title(key_name)
                 cbar = fig.colorbar(CS)
-
-                # save plot
-                plt.savefig(name_output_file + '.png')
-                # to display the plot uncomment the line below
                 # plt.show()
-                plt.close(fig)
+
+                if tag_save_2d_dat:
+                    np.savetxt(name_output_file + '.dat', arr_object, fmt="%d")
+
+                if tag_save_2d_png:
+                    fig.savefig(name_output_file + '.png')
+
+                plt.close()
+
+                if tag_save_2d_tif:
+                    im_from_png = np.array(Image.open(name_output_file + '.png'))
+                    Image.fromarray(im_from_png).save(name_output_file + ".tiff", "TIFF")

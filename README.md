@@ -77,7 +77,9 @@ Here are short descriptions about these documents:
    Python script to display metadata stored in a selected ROOT file
 
 - `plot_all_root_data.py` 
-   Python script to plot all graphs stored in a ROOT file
+   Python script to plot all graphs stored in a ROOT file. There are options to save 1D datasets as
+   .dat or .png and 2D datasets as .dat, .png or .tiff files. For 2D, the user can also choose to 
+   invert the y-axis.
    
 - `projection_2D.py`
    Python script to calculate 1D projection of selected portion of 2D contourplot.

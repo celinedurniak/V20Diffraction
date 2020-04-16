@@ -19,8 +19,8 @@ from mcstasscript.interface import plotter
 from mcstasscript.interface import reader
 
 # load McStas instrument file.
-path_to_model = '/Users/celinedurniak/Documents/WorkESS/V20/V20last/'
-InstrReader = reader.McStas_file(path_to_model + 'V20_March2020_NAK_Denex.instr')
+path_to_model = '/Users/celinedurniak/V20DiffractionData/'
+InstrReader = reader.McStas_file(path_to_model + 'V20_config6.instr')
 
 InstrReader.write_python_file('generated_mode.py', force=True)
 

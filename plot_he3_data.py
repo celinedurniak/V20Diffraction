@@ -33,7 +33,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-path_to_he3_files = '/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_DreamTeam_Feb2018/DREAMTeam_Feb2018/TsDau/'
+path_to_he3_files = '/Users/celinedurniak/V20DiffractionData/TsDau/'
 
 # Spectrum 3
 he3sp3ch3 = np.genfromtxt(path_to_he3_files+'Spectrum03.bn4ch3_bin2500.asc')

@@ -16,7 +16,7 @@
 
 import uproot
 
-path_to_file = '/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_DreamTeam_Feb2018/DREAMTeam_Feb2018/DENEX/'
+path_to_file = '/Users/celinedurniak/V20DiffractionData/DENEX/'
 
 # Create dictionary to generate plots
 # Each entry corresponds to the spectrum number, the associated root file and

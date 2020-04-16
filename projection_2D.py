@@ -21,7 +21,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import SpanSelector
 
-path_to_root_file = '/Users/celinedurniak/Documents/test_root/Diffraction/TBL_Data_DreamTeam_Feb2018/DREAMTeam_Feb2018/DENEX/'
+path_to_root_file = '/Users/celinedurniak/V20DiffractionData/DENEX/'
 
 ROOTfile = 'Spectrum03_DENEX006_1_18-02-05_0000.root'
 dir_with_data = 'Meas_3'

@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 
 
 # path to load McStas simulation data
-path_to_model = "/Users/celinedurniak/Documents/WorkESS/V20/V20Diffraction_ROOT_ASC_McStas/"
+path_to_model = "/Users/celinedurniak/V20DiffractionData/"
 
 # read instrument file
 InstrReader = reader.McStas_file(path_to_model + "/V20_config6/V20_config6.instr")
