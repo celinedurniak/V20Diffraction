@@ -75,11 +75,15 @@ Here are short descriptions about these documents:
    
 - `display_metadata_root.py`
    Python script to display metadata stored in a selected ROOT file
+   
+- `open_tiff_png_dat_from_ROOT.py`
+   Python script to open and display `.dat`, `.png`, `.tiff` files of 1D and 2D datasets, originally 
+   stored in ROOT files
 
 - `plot_all_root_data.py` 
    Python script to plot all graphs stored in a ROOT file. There are options to save 1D datasets as
    .dat or .png and 2D datasets as .dat, .png or .tiff files. For 2D, the user can also choose to 
-   invert the y-axis.
+   invert the y-axis
    
 - `projection_2D.py`
    Python script to calculate 1D projection of selected portion of 2D contourplot.
@@ -95,6 +99,10 @@ Here are short descriptions about these documents:
    Python script which allows affine scaling of x- and y- axes of selected 1D datasets from ROOT, 
    McStas and He3 tubes
    
+- `Open_tiff_png_dat_from_ROOT.ipynb`
+   Notebook to open and display `.dat`, `.png`, `.tiff` files of 1D and 2D datasets, originally 
+   stored in ROOT files
+
 - `Plot_He3_data.ipynb`
    Notebook to plot ascii files from He3 tubes (after rebinning)
 
@@ -102,14 +110,14 @@ Here are short descriptions about these documents:
    Notebook to plot output data of McStas simulation. Two approaches are presented:
        - using `McStasScript`
        - using `matplotlib`
-   
+       
+- `Plot_ROOT_He3_McStas.ipynb`
+   Notebook to plot data from He3, ROOT files and McStas simulations. 
+   We focus on He3tube5 and Spectrum03
+       
 - `ROOTfile_metadata_and_plots.ipynb`
    Notebook to display metadata in a user-selected ROOT file and display and save all graphs stored
     in ROOT files
    
 - `Run_McStas_simulation.ipynb`
    Notebook to run a McStas simulation using McStasScript functionalities
-   
-- `Plot_ROOT_He3_McStas.ipynb`
-   Notebook to plot data from He3, ROOT files and McStas simulations. 
-   We focus on He3tube5 and Spectrum03.
