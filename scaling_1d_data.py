@@ -48,7 +48,6 @@ with uproot.open(path_to_root_file)['Meas_3'] as myFile:
         if 'TH1I' in str(myFile[key]) and data_to_load in str(myFile[key]):
             y_root = myFile[key].values
 
-# y_root = np.genfromtxt(path_to_root_file)
 x_root = np.arange(len(y_root))
 line_root, = ax.plot(x_root, y_root, label='root', color=colors_curves[1])
 # store initial values

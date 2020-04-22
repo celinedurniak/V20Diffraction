@@ -14,13 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see < https://www.gnu.org / licenses/>.
 
+import os
 from mcstasscript.interface import instr
 from mcstasscript.interface import plotter
 from mcstasscript.interface import reader
 
 # load McStas instrument file.
-path_to_model = '/Users/celinedurniak/V20DiffractionData/'
-InstrReader = reader.McStas_file(path_to_model + 'V20_config6.instr')
+path_to_model = '/Users/celinedurniak/V20DiffractionData'
+InstrReader = reader.McStas_file(os.path.join(path_to_model, 'V20_config6.instr'))
 
 InstrReader.write_python_file('generated_mode.py', force=True)
 

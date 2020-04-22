@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see < https://www.gnu.org / licenses/>.
 
+import os
 import uproot
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,7 +22,7 @@ import matplotlib.pyplot as plt
 # to save tiff files
 from PIL import Image
 
-path_to_file = '/Users/celinedurniak/V20DiffractionData/DENEX/'
+path_to_file = '/Users/celinedurniak/V20DiffractionData/DENEX'
 
 # Create dictionary to generate plots
 # Each entry corresponds to the spectrum number, the associated root file
@@ -72,7 +73,8 @@ for key_spectrum in dict_root_files.keys():
     dir_with_data = dict_root_files[key_spectrum][1]
 
     # open root file
-    with uproot.open(path_to_file + ROOTfile)[dir_with_data] as myFile:
+    file_to_open = os.path.join(path_to_file, ROOTfile)
+    with uproot.open(file_to_open)[dir_with_data] as myFile:
         for key in myFile.keys():
 
             if key_spectrum == 'Spectrum09' and ('1D3' in str(key) or 'FINISHED' in str(key)):

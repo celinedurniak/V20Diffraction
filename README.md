@@ -18,7 +18,7 @@ Here are the steps to follow:
     conda create -n v20_root_env -c conda-forge uproot matplotlib jupyter ipywidgets
     conda activate v20_root_env
     ```
-
+  
 - activate your environment, called `v20_root_env` in this example (but you can choose something 
   else)
   
@@ -63,6 +63,22 @@ Once in the document, just `import uproot` to use its functionalities.
 **Content of the folder**:
 
 For different aspects of the data treatment, Python scripts and/or Jupyter notebooks are provided. 
+
+| Tables                                          | Python script                    | Jupyter notebook                     |
+|:------------------------------------------------|:-------------------------------- | :----------------------------------- |
+| run McStas simulation                           | `run_mcstas_sim.py`+              | `Run_McStas_simulation.ipynb`+        |
+| plot McStas output datafiles                    | `plot_mcstas_output.py`+          | `Plot_McStas_output.ipynb`+           |
+| plot ascii files from He3 tubes                 | `plot_he3_data.py`               | `Plot_He3_data.ipynb`                |
+| plot all ROOT files                             | `plot_all_root_data.py`*          | `ROOTfile_metadata_and_plots.ipynb`* |
+| display metadata stored in a selected ROOT file | `display_metadata_root.py`       | `ROOTfile_metadata_and_plots.ipynb`* |
+| plot and compare data from He3, ROOT and McStas | `scaling_1d_data.py`             | `Plot_ROOT_He3_McStas.ipynb`+        |
+| calculate and display projection of 2D data     | `projection_2D.py`               |                                      |
+| generate tif, dat, png from ROOT files          | `plot_all_root_data.py`*          | `ROOTfile_metadata_and_plots.ipynb`* |
+| open and display tif, dat, png from ROOT files  | `open_tiff_png_dat_from_ROOT.py`* | `Open_tiff_png_dat_from_ROOT.ipynb`* |
+
+* : requires PIL  
++ : requires McstasScript  
+    
 Here are short descriptions about these documents:
 
 - `plot_mcstas_output.py`
