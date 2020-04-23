@@ -71,6 +71,11 @@ Once in the document, just `import uproot` to use its functionalities.
     conda install -c conda-forge mpich
     conda install -c anaconda gxx_linux-64
     ```
+  
+- to test your installation, in the activated conda environment you can run the Python script
+  `check_installation.py` located in the `tools` folder. It will check if `uproot`, `PIL`, 
+  `McStasScript` and `matplotlib` are installed.
+
 
 **Content of the folder**:
 
