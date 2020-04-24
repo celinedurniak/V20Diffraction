@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+import os
 import uproot
 import matplotlib.pyplot as plt
 from matplotlib.widgets import TextBox, Button, CheckButtons
@@ -32,6 +33,10 @@ ax.title.set_text(r'Only affine transformations are allowed. Index m, r , h refe
 
 # Mcstas data
 path_to_mcstas_file = '/Users/celinedurniak/V20DiffractionData/V20_config6/monitor_Hetube5.dat'
+
+assert os.path.isfile(path_to_mcstas_file), \
+    'There is an issue with the chosen McStas output datafile'
+
 x_mcstas, y_mcstas = np.genfromtxt(path_to_mcstas_file, usecols=(0, 1), unpack=True)
 
 line_mcstas, = ax.plot(x_mcstas, y_mcstas, label='mcstas', color=colors_curves[0])
@@ -41,6 +46,10 @@ yini_mcstas = line_mcstas.get_ydata()
 
 # ROOT data H_TOF_dsp_after_run_3
 path_to_root_file = '/Users/celinedurniak/V20DiffractionData/DENEX/Spectrum03_DENEX006_1_18-02-05_0000.root'
+
+assert os.path.isfile(path_to_root_file), \
+    'There is an issue with the chosen ROOT file'
+
 data_to_load = 'H_TOF_dsp_after_run_3'
 
 with uproot.open(path_to_root_file)['Meas_3'] as myFile:
@@ -56,6 +65,10 @@ yini_root = line_root.get_ydata()
 
 # He3 data
 path_to_he3_file = '/Users/celinedurniak/V20DiffractionData/TsDau/Spectrum03.bn4ch3_bin2500.asc'
+
+assert os.path.isfile(path_to_he3_file), \
+    'There is an issue with the chosen datafile from He3 tube'
+
 x_he3, y_he3 = np.genfromtxt(path_to_he3_file, usecols=(0, 1), unpack=True)
 line_he3, = ax.plot(x_he3, y_he3, label='he3', color=colors_curves[2])
 # store initial values

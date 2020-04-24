@@ -24,6 +24,8 @@ from PIL import Image
 
 path_to_file = '/Users/celinedurniak/V20DiffractionData/DENEX'
 
+assert os.path.exists(path_to_file), 'The path does not exist.'
+
 # Create dictionary to generate plots
 # Each entry corresponds to the spectrum number, the associated root file
 # and the folder to get the data from

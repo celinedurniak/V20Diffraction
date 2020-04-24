@@ -30,10 +30,13 @@
 #
 # Only data with 2500 bins were considered for Spectrum3 in order to be consistent for all spectra.
 
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 
 path_to_he3_files = '/Users/celinedurniak/V20DiffractionData/TsDau/'
+
+assert os.path.exists(path_to_he3_files), 'The path does not exist.'
 
 # Spectrum 3
 he3sp3ch3 = np.genfromtxt(path_to_he3_files+'Spectrum03.bn4ch3_bin2500.asc')

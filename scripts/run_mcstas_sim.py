@@ -21,7 +21,14 @@ from mcstasscript.interface import reader
 
 # load McStas instrument file.
 path_to_model = '/Users/celinedurniak/V20DiffractionData'
-InstrReader = reader.McStas_file(os.path.join(path_to_model, 'V20_config6.instr'))
+
+assert os.path.exists(path_to_model), 'The path does not exist.'
+
+model_to_open = os.path.join(path_to_model, 'V20_config6.instr')
+
+assert os.path.isfile(model_to_open), 'There is an issue with the McStas .instr file to be opened.'
+
+InstrReader = reader.McStas_file(model_to_open)
 
 InstrReader.write_python_file('generated_mode.py', force=True)
 
@@ -48,6 +55,9 @@ data = demoV20.run_full_instrument(foldername=result_folder,
                                    mpi=2,
                                    ncount=2E4,
                                    increment_folder_name=True)
+
+assert os.path.isdir(result_folder), \
+    'The folder which should contain the outputs of McStas simulation does not exist'
 
 # plot results
 for item in data:
