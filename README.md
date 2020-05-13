@@ -92,7 +92,7 @@ For different aspects of the data treatment, Python scripts and/or Jupyter noteb
 | calculate and display projection of 2D data     | `projection_2D.py`                |                                      |
 | generate tif, dat, png from ROOT files          | `plot_all_root_data.py`*          | `ROOTfile_metadata_and_plots.ipynb`* |
 | open and display tif, dat, png from ROOT files  | `open_tiff_png_dat_from_ROOT.py`* | `Open_tiff_png_dat_from_ROOT.ipynb`* |
-| compare 2D data from ROOT and McStas            |                                   | `Compare_2D_datasets.ipynb`+         |
+| compare 2D data from ROOT and McStas            |                                   | `Compare_2D_datasets.ipynb`          |
 Legend of the table: * : requires PIL , + : requires McstasScript  
     
 Here are short descriptions about these documents:
