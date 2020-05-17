@@ -16,7 +16,7 @@ Here are the steps to follow:
 
 - create an environment, typing the following 2 lines in a terminal:
     ```
-    conda create -n v20_root_env -c conda-forge uproot matplotlib jupyter ipywidgets
+    conda create -n v20_root_env -c conda-forge uproot ipympl matplotlib jupyter ipywidgets
     conda activate v20_root_env
     ```
   
