@@ -52,13 +52,15 @@ McStasInstrument.print_component('NAK')
 # access data stored after McStas simulations
 data_to_plot = functions.load_data(os.path.join(path_to_model, result_folder))
 
-# Create a dictionary containing filenames, shape of output data and x, y labels
+# Create a dictionary containing filenames, shape of output data, x, y labels and
+# position of component
 dict_mcstas_files = {}
 
 for item in data_to_plot:
     file_key = item.metadata.info['filename'].rstrip()
     xlabel = item.metadata.info['xlabel'].rstrip()
     ylabel = item.metadata.info['ylabel'].rstrip()
+    position = [float(item) for item in item.metadata.info['position'].split()]
     type_array = item.metadata.info['type']
     start = type_array.find('(') + 1
     end = type_array.find(')', start)
@@ -69,11 +71,13 @@ for item in data_to_plot:
         dict_mcstas_files[file_key] = ((int(nx_value),
                                         int(ny_value)),
                                        xlabel,
-                                       ylabel)
+                                       ylabel,
+                                       position)
     else:
         dict_mcstas_files[file_key] = (int(type_array[start:end]),
                                        xlabel,
-                                       ylabel)
+                                       ylabel,
+                                       position)
 
 # plot all datafiles on a single page
 # plotter.make_sub_plot(data_to_plot)
@@ -93,7 +97,6 @@ assert os.path.isfile(datafile1D_to_open), 'There is an issue with the 1D datafi
 print(dict_mcstas_files[selected_filename])
 
 fig, ax = plt.subplots()
-
 x, y = np.genfromtxt(datafile1D_to_open, usecols=(0, 1), unpack=True)
 ax.plot(x, y, label=selected_filename)
 ax.set_xlabel(dict_mcstas_files[selected_filename][1])
@@ -101,8 +104,7 @@ ax.set_ylabel(dict_mcstas_files[selected_filename][2])
 ax.legend()
 plt.show()
 
-# plot 2D - the number of line to read is hard-coded but could be accessed from the header of
-# the file: '# type: array_2d(150, 150)'
+# plot 2D
 selected_filename = 'monitor_tx_DENEX.dat'
 
 datafile2D_to_open = os.path.join(path_to_model, result_folder, selected_filename)
@@ -111,12 +113,12 @@ assert os.path.isfile(datafile2D_to_open), 'There is an issue with the 2D datafi
 
 print(dict_mcstas_files[selected_filename])
 
-# check that we are dealing with 2D data and set the limit to read the first matrix only
-
 data2d = np.genfromtxt(datafile2D_to_open, max_rows=dict_mcstas_files[selected_filename][0][0])
 
-fig, ax = plt.subplots()
+if float(dict_mcstas_files[selected_filename][-1][0]) < 0:
+    data2d = np.flip(data2d, 0)
 
+fig, ax = plt.subplots()
 contf = ax.imshow(np.flip(data2d, 0), aspect='auto')
 ax.set_xlabel(dict_mcstas_files[selected_filename][1])
 ax.set_ylabel(dict_mcstas_files[selected_filename][2])
