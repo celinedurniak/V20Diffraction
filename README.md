@@ -99,6 +99,8 @@ For different aspects of the data treatment, Python scripts and/or Jupyter noteb
 | open and display tif, dat, png from ROOT files  | `open_tiff_png_dat_from_ROOT.py`* | `Open_tiff_png_dat_from_ROOT.ipynb`* |
 | compare 2D data from ROOT and McStas            |                                   | `Compare_2D_datasets.ipynb`          |
 | perform WFM stitching on ROOT and Mcstas data   |                                   |  `WFM_Stitching_2D.ipynb`            |
+
+
 Legend of the table: * : requires PIL , + : requires McstasScript  
     
 Here are short descriptions about these documents:
