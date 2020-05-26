@@ -23,11 +23,16 @@ Here are the steps to follow:
 - activate your environment, called `v20_root_env` in this example (but you can choose something 
   else)
   
-- install `McStasScript` following the instructions at 
-  [link](https://github.com/PaNOSC-ViNYL/McStasScript).
-
+- The Wave-Frame Multiplication stitching requires [`wfmess`](https://github.com/nvaytet/wfmess), 
+  which can be installed using the following command in a terminal
+  `python3 -m install wfmess`
+  
 - if you want to convert datasets stored in ROOT files to tiff images, install Pillow using 
   `python3 -m pip install --upgrade Pillow`
+  
+- `McStas` simulations can be run from Python script or Jupyter notebook using `McStasScript`. It 
+   can be installed following the instructions at 
+    [link](https://github.com/PaNOSC-ViNYL/McStasScript).
 
 That's it. You can now use either a Python script or a Jupyter notebook. To open the latter, type 
 the following command in a terminal
@@ -93,6 +98,7 @@ For different aspects of the data treatment, Python scripts and/or Jupyter noteb
 | generate tif, dat, png from ROOT files          | `plot_all_root_data.py`*          | `ROOTfile_metadata_and_plots.ipynb`* |
 | open and display tif, dat, png from ROOT files  | `open_tiff_png_dat_from_ROOT.py`* | `Open_tiff_png_dat_from_ROOT.ipynb`* |
 | compare 2D data from ROOT and McStas            |                                   | `Compare_2D_datasets.ipynb`          |
+| perform WFM stitching on ROOT and Mcstas data   |                                   |  `WFM_Stitching_2D.ipynb`            |
 Legend of the table: * : requires PIL , + : requires McstasScript  
     
 Here are short descriptions about these documents:
@@ -169,5 +175,7 @@ Here are short descriptions about these documents:
    
 - `Run_McStas_simulation.ipynb`
    Notebook to run a McStas simulation using McStasScript functionalities
-  
    
+- `WFM_Stitching_2D.ipynb`
+   Notebook to perform WFM stitching on ROOT and McStas data
+  
