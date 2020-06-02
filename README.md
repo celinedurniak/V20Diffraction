@@ -23,9 +23,9 @@ Here are the steps to follow:
 - activate your environment, called `v20_root_env` in this example (but you can choose something 
   else)
   
-- The Wave-Frame Multiplication stitching requires [`wfmess`](https://github.com/nvaytet/wfmess), 
+- The Wave-Frame Multiplication stitching requires [`dress`](https://github.com/ess-dmsc-dram/dress), 
   which can be installed using the following command in a terminal
-  `python3 -m install wfmess`
+  `python3 -m install dress`
   
 - if you want to convert datasets stored in ROOT files to tiff images, install Pillow using 
   `python3 -m pip install --upgrade Pillow`
@@ -99,6 +99,7 @@ For different aspects of the data treatment, Python scripts and/or Jupyter noteb
 | open and display tif, dat, png from ROOT files  | `open_tiff_png_dat_from_ROOT.py`* | `Open_tiff_png_dat_from_ROOT.ipynb`* |
 | compare 2D data from ROOT and McStas            |                                   | `Compare_2D_datasets.ipynb`          |
 | perform WFM stitching on ROOT and Mcstas data   |                                   |  `WFM_Stitching_2D.ipynb`            |
+| compare 1D projections from 2D ROOT and Mcstas data |                               | `Projection_2D.ipynb`                |
 
 
 Legend of the table: * : requires PIL , + : requires McstasScript  
@@ -170,6 +171,10 @@ Here are short descriptions about these documents:
 - `Plot_ROOT_He3_McStas.ipynb`
    Notebook to plot data from He3, ROOT files and McStas simulations. 
    We focus on He3tube5 and Spectrum03
+   
+- `Projection_2D.ipynb`
+   Notebook to compare 1D projections from 2D ROOT and McStas data. The range of y-values to 
+   generate the projections is set by the user
        
 - `ROOTfile_metadata_and_plots.ipynb`
    Notebook to display metadata in a user-selected ROOT file and display and save all graphs stored
