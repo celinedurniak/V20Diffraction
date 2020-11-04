@@ -21,10 +21,9 @@ import uproot
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import SpanSelector
+import dataconfig  # to get path to datafiles
 
-path_to_root_file = '/Users/celinedurniak/V20DiffractionData/DENEX'
-
-assert os.path.exists(path_to_root_file), 'The path does not exist.'
+assert os.path.exists(dataconfig.data_root), 'The path to ROOT files does not exist.'
 
 ROOTfile = 'Spectrum03_DENEX006_1_18-02-05_0000.root'
 
@@ -32,7 +31,7 @@ dir_with_data = 'Meas_3'
 
 data_to_plot = 'H_TOF,X1-X2_User_2D2_dsp_after_run_3'
 
-file_to_open = os.path.join(path_to_root_file, ROOTfile)
+file_to_open = os.path.join(dataconfig.data_root, ROOTfile)
 
 assert os.path.isfile(file_to_open), 'There is an issue with the file to be opened.'
 

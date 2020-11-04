@@ -18,13 +18,14 @@ import os
 from mcstasscript.interface import instr
 from mcstasscript.interface import plotter
 from mcstasscript.interface import reader
+import dataconfig  # to get path to datafiles
+
 
 # load McStas instrument file.
-path_to_model = '/Users/celinedurniak/V20DiffractionData'
 
-assert os.path.exists(path_to_model), 'The path does not exist.'
+assert os.path.exists(dataconfig.data_mcstas), 'The path to McStas files does not exist.'
 
-model_to_open = os.path.join(path_to_model, 'V20_config6.instr')
+model_to_open = os.path.join(dataconfig.data_mcstas, 'V20_config6.instr')
 
 assert os.path.isfile(model_to_open), 'There is an issue with the McStas .instr file to be opened.'
 

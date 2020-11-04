@@ -21,6 +21,8 @@ from matplotlib.widgets import TextBox, Button, CheckButtons
 import matplotlib.gridspec as gridspec
 import numpy as np
 import re
+import dataconfig  # to get path to datafiles
+
 
 colors_curves = ['#1f77b4', '#ff7f0e', '#2ca02c']
 
@@ -32,7 +34,7 @@ ax.title.set_text(r'Only affine transformations are allowed. Index m, r , h refe
                   r'ROOT and He3, respectively ')
 
 # Mcstas data
-path_to_mcstas_file = '/Users/celinedurniak/V20DiffractionData/V20_config6/monitor_Hetube5.dat'
+path_to_mcstas_file = os.path.join(dataconfig.data_mcstas, 'monitor_Hetube5.dat')
 
 assert os.path.isfile(path_to_mcstas_file), \
     'There is an issue with the chosen McStas output datafile'
@@ -45,10 +47,9 @@ xini_mcstas = line_mcstas.get_xdata()
 yini_mcstas = line_mcstas.get_ydata()
 
 # ROOT data H_TOF_dsp_after_run_3
-path_to_root_file = '/Users/celinedurniak/V20DiffractionData/DENEX/Spectrum03_DENEX006_1_18-02-05_0000.root'
+path_to_root_file = os.path.join(dataconfig.data_root, 'Spectrum03_DENEX006_1_18-02-05_0000.root')
 
-assert os.path.isfile(path_to_root_file), \
-    'There is an issue with the chosen ROOT file'
+assert os.path.isfile(path_to_root_file), 'There is an issue with the chosen ROOT file'
 
 data_to_load = 'H_TOF_dsp_after_run_3'
 
@@ -64,7 +65,7 @@ xini_root = line_root.get_xdata()
 yini_root = line_root.get_ydata()
 
 # He3 data
-path_to_he3_file = '/Users/celinedurniak/V20DiffractionData/TsDau/Spectrum03.bn4ch3_bin2500.asc'
+path_to_he3_file = os.path.join(dataconfig.data_he3, 'Spectrum03.bn4ch3_bin2500.asc')
 
 assert os.path.isfile(path_to_he3_file), \
     'There is an issue with the chosen datafile from He3 tube'
