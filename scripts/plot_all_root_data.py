@@ -18,13 +18,12 @@ import os
 import uproot
 import numpy as np
 import matplotlib.pyplot as plt
+import dataconfig  # to get path to datafiles
 
 # to save tiff files
 from PIL import Image
 
-path_to_file = '/Users/celinedurniak/V20DiffractionData/DENEX'
-
-assert os.path.exists(path_to_file), 'The path does not exist.'
+assert os.path.exists(dataconfig.data_root), 'The path to ROOT files does not exist.'
 
 # Create dictionary to generate plots
 # Each entry corresponds to the spectrum number, the associated root file
@@ -75,7 +74,7 @@ for key_spectrum in dict_root_files.keys():
     dir_with_data = dict_root_files[key_spectrum][1]
 
     # open root file
-    file_to_open = os.path.join(path_to_file, ROOTfile)
+    file_to_open = os.path.join(dataconfig.data_root, ROOTfile)
     with uproot.open(file_to_open)[dir_with_data] as myFile:
         for key in myFile.keys():
 

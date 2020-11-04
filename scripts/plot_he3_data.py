@@ -34,16 +34,16 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-path_to_he3_files = '/Users/celinedurniak/V20DiffractionData/TsDau/'
+import dataconfig  # to get path to datafiles
 
-assert os.path.exists(path_to_he3_files), 'The path does not exist.'
+assert os.path.exists(dataconfig.data_he3), 'The path to He3 files does not exist.'
 
 # Spectrum 3
-he3sp3ch3 = np.genfromtxt(path_to_he3_files+'Spectrum03.bn4ch3_bin2500.asc')
-he3sp3ch5 = np.genfromtxt(path_to_he3_files+'Spectrum03.bn4ch5_bin2500.asc')
-he3sp3ch6 = np.genfromtxt(path_to_he3_files+'Spectrum03.bn4ch6_bin2500.asc')
-he3sp3ch7 = np.genfromtxt(path_to_he3_files+'Spectrum03.bn4ch7_bin2500.asc')
-he3sp3ch8 = np.genfromtxt(path_to_he3_files+'Spectrum03.bn4ch8_bin2500.asc')
+he3sp3ch3 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum03.bn4ch3_bin2500.asc'))
+he3sp3ch5 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum03.bn4ch5_bin2500.asc'))
+he3sp3ch6 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum03.bn4ch6_bin2500.asc'))
+he3sp3ch7 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum03.bn4ch7_bin2500.asc'))
+he3sp3ch8 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum03.bn4ch8_bin2500.asc'))
 
 fig, ax = plt.subplots(3, 2, sharex='col', figsize=(10, 10))
 plt.suptitle('Data from He3 tubes')
@@ -61,11 +61,11 @@ ax[0, 1].legend()
 ax[0, 1].grid()
 
 # Spectrum 11
-he3sp11ch3 = np.genfromtxt(path_to_he3_files+'Spectrum11.bn4ch3_bin2500.asc')
-he3sp11ch5 = np.genfromtxt(path_to_he3_files+'Spectrum11.bn4ch5_bin2500.asc')
-he3sp11ch6 = np.genfromtxt(path_to_he3_files+'Spectrum11.bn4ch6_bin2500.asc')
-he3sp11ch7 = np.genfromtxt(path_to_he3_files+'Spectrum11.bn4ch7_bin2500.asc')
-he3sp11ch8 = np.genfromtxt(path_to_he3_files+'Spectrum11.bn4ch8_bin2500.asc')
+he3sp11ch3 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum11.bn4ch3_bin2500.asc'))
+he3sp11ch5 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum11.bn4ch5_bin2500.asc'))
+he3sp11ch6 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum11.bn4ch6_bin2500.asc'))
+he3sp11ch7 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum11.bn4ch7_bin2500.asc'))
+he3sp11ch8 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum11.bn4ch8_bin2500.asc'))
 
 plt.figtext(0.5, 0.62, 'Spectrum 11', ha='center', va='center')
 ax[1, 0].plot(he3sp11ch3[:, 0], he3sp11ch3[:, 1], label='Ch3')
@@ -80,11 +80,11 @@ ax[1, 1].legend()
 ax[1, 1].grid()
 
 # Spectrum 12
-he3sp12ch3 = np.genfromtxt(path_to_he3_files+'Spectrum12.bn4ch3_bin2500.asc')
-he3sp12ch5 = np.genfromtxt(path_to_he3_files+'Spectrum12.bn4ch5_bin2500.asc')
-he3sp12ch6 = np.genfromtxt(path_to_he3_files+'Spectrum12.bn4ch6_bin2500.asc')
-he3sp12ch7 = np.genfromtxt(path_to_he3_files+'Spectrum12.bn4ch7_bin2500.asc')
-he3sp12ch8 = np.genfromtxt(path_to_he3_files+'Spectrum12.bn4ch8_bin2500.asc')
+he3sp12ch3 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum12.bn4ch3_bin2500.asc'))
+he3sp12ch5 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum12.bn4ch5_bin2500.asc'))
+he3sp12ch6 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum12.bn4ch6_bin2500.asc'))
+he3sp12ch7 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum12.bn4ch7_bin2500.asc'))
+he3sp12ch8 = np.genfromtxt(os.path.join(dataconfig.data_he3, 'Spectrum12.bn4ch8_bin2500.asc'))
 
 plt.figtext(0.5, 0.35, 'Spectrum 12', ha='center', va='center')
 
