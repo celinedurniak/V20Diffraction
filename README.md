@@ -25,7 +25,7 @@ when creating your environment in the above command)
 
 - The Wave-Frame Multiplication stitching requires [`dress`](https://github.com/ess-dmsc-dram/dress),
   which can be installed using the following command in a terminal
-  `python3 -m install dress`
+  `python3 -m pip install dress`
 
 - if you want to convert datasets stored in ROOT files to tiff images, install Pillow using
   `python3 -m pip install --upgrade Pillow`
@@ -35,9 +35,9 @@ when creating your environment in the above command)
     [link](https://github.com/PaNOSC-ViNYL/McStasScript).
 
 You can now use either Python scripts or Jupyter notebooks. To use those available in this 
-repository, either download or clone it at https://github.com/celinedurniak/V20Diffraction. 
+repository, either download or clone it from https://github.com/celinedurniak/V20Diffraction. 
 Unzip if you chose to download. Then, from a terminal, move to where the folder is located and 
-activate your environment, if it is not activated yet. The next step is to specify the path
+activate your environment (if not already activated). The next step is to specify the path
 to the different datafiles by running `make_config.py` either in the `scripts` folder or the 
 `notebooks` one. In the terminal where your conda environment is activated, type the following 
 commands, if you want to use the notebooks:
@@ -57,6 +57,18 @@ You will be asked to enter different absolute paths respectively to:
 Simply press `Enter` if you do not have such types of files. The output is written in a `dataconfig.py`, 
 which is imported in the notebooks to get access the datafiles' contents.
 
+If you prefer using Python scripts, simply go to the `scripts` folder and run `make_config.py` before 
+using any of the Python scripts located in the folder.
+
+You can also directly create a `dataconfig.py` by hand. Its content is  
+ 
+```python
+data_root="Absolute path to ROOT data files to be specified"
+data_mcstas="Absolute path to McStas output data files to be specified"
+data_he3="Absolute path to He3 tubes ASCII data files to be specified"
+data_extracted_from_root="Absolute path to output files from conversion of ROOT files to be specified"
+```
+If you do not have any particular type of datafiles, leave an empty quote `""`.
 
 **Comments**:  
 
@@ -68,7 +80,7 @@ which is imported in the notebooks to get access the datafiles' contents.
     ```
 - to remove the environmwent:
     ```
-    conda remove -n v20_root_env --all
+    conda remove --name v20_root_env --all
     ```
 
 - another way to use ROOT and Python is to write Python scripts importing `uproot` and running these
