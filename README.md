@@ -14,32 +14,38 @@ Here are the steps to follow:
 - install anaconda or miniconda (see
   [link](https://docs.conda.io/projects/conda/en/latest/user-guide/install/download.html))
 
-- create an environment, typing the following 2 lines in a terminal:
+- download or clone this repository from https://github.com/celinedurniak/V20Diffraction.
+
+- unzip if you chose to download.
+
+- in a terminal, move to where you put the folder
+
+- create a conda environment using the `requirements.yml` file, by typing the following 2 lines in a
+  terminal:
     ```
-    conda create -n v20_root_env -c conda-forge uproot ipympl matplotlib jupyter ipywidgets
+    conda env create -f environment.yml
+    ```
+
+- activate your environment, called `v20_root_env` by typing in the terminal
+    ```
     conda activate v20_root_env
     ```
 
-- activate your environment, called `v20_root_env` in this example (but you can choose another name 
-when creating your environment in the above command)
+The created environment also contains:
+-
+   - `dress`](https://github.com/ess-dmsc-dram/dress), required for Wave-Frame Multiplication
+    stitching
 
-- The Wave-Frame Multiplication stitching requires [`dress`](https://github.com/ess-dmsc-dram/dress),
-  which can be installed using the following command in a terminal
-  `python3 -m pip install dress`
+   - `Pillow` required to convert datasets stored in ROOT files to tiff images,
 
-- if you want to convert datasets stored in ROOT files to tiff images, install Pillow using
-  `python3 -m pip install --upgrade Pillow`
-
-- `McStas` simulations can be run from Python script or Jupyter notebook using `McStasScript`. It
-   can be installed following the instructions at
+   - `McStasScript`required to run `McStas` simulations from Python script or Jupyter notebook. Note
+    that you have to configure your installation by following the instructions at
     [link](https://github.com/PaNOSC-ViNYL/McStasScript).
 
-You can now use either Python scripts or Jupyter notebooks. To use those available in this 
-repository, either download or clone it from https://github.com/celinedurniak/V20Diffraction. 
-Unzip if you chose to download. Then, from a terminal, move to where the folder is located and 
-activate your environment (if not already activated). The next step is to specify the path
-to the different datafiles by running `make_config.py` either in the `scripts` folder or the 
-`notebooks` one. In the terminal where your conda environment is activated, type the following 
+
+You can now use either Python scripts or Jupyter notebooks. The next step is to specify the path
+to the different datafiles by running `make_config.py` either in the `scripts` folder or the
+`notebooks` one. In the terminal where your conda environment is activated, type the following
 commands, if you want to use the notebooks:
 
    ```
@@ -49,19 +55,19 @@ commands, if you want to use the notebooks:
 You will be asked to enter different absolute paths respectively to:
 - the ROOT files
 - the folder containing results of the McStas simulation you want to compare the ROOT files to
-- the folder to the He3 tubes ASCII files related to the same experiment as the one, when the ROOT 
+- the folder to the He3 tubes ASCII files related to the same experiment as the one, when the ROOT
   files have been recorded.
-- the fourth path has to be entered if you already have converted some of the ROOT files to .tif, 
-  .dat or .png (using `plot_all_root_data.py` or `ROOTfile_metadata_and_plots.ipynb`). 
-  
-Simply press `Enter` if you do not have such types of files. The output is written in a `dataconfig.py`, 
-which is imported in the notebooks to get access the datafiles' contents.
+- the fourth path has to be entered if you already have converted some of the ROOT files to .tif,
+  .dat or .png (using `plot_all_root_data.py` or `ROOTfile_metadata_and_plots.ipynb`).
 
-If you prefer using Python scripts, simply go to the `scripts` folder and run `make_config.py` before 
-using any of the Python scripts located in the folder.
+Simply press `Enter` if you do not have such types of files. The output is written in a
+`dataconfig.py`, which is imported in the notebooks to get access the datafiles' contents.
+
+If you prefer using Python scripts, simply go to the `scripts` folder and run `make_config.py`
+before using any of the Python scripts located in the folder.
 
 You can also directly create a `dataconfig.py` by hand. Its content is  
- 
+
 ```python
 data_root="Absolute path to ROOT data files to be specified"
 data_mcstas="Absolute path to McStas output data files to be specified"

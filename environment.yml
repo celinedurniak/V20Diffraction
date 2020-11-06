@@ -1,0 +1,17 @@
+name: v20_root_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - ipywidgets
+  - jupyter
+  - ipympl
+  - matplotlib
+  - uproot
+  - pip
+  - pip:
+    # works for regular pip packages
+    - dress
+    - Pillow
+    - McStasScript
+prefix: /Users/celinedurniak/anaconda3/envs/v20_root_env
