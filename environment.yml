@@ -4,6 +4,7 @@ channels:
   - defaults
 dependencies:
   - ipywidgets
+  - scipy
   - jupyter
   - ipympl
   - matplotlib
