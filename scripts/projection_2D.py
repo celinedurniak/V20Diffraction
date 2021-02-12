@@ -38,23 +38,18 @@ assert os.path.isfile(file_to_open), 'There is an issue with the file to be open
 with uproot.open(file_to_open)[dir_with_data] as myFile:
     for key in myFile.keys():
         # 2D contourplot
-        if 'TH2' in str(myFile[key]) and data_to_plot in str(myFile[key]):
-            # x_max, x_min, y_max, y_min defined from .root file
-            x_min = myFile[key].xlow
-            x_max = myFile[key].xhigh
-            bins_x = myFile[key].xnumbins
-            y_min = myFile[key].ylow
-            y_max = myFile[key].yhigh
-            bins_y = myFile[key].ynumbins
-
+        if data_to_plot in str(key):
             # create x- and y-axis
-            deltax = (x_max - x_min)/(bins_x - 1)
-            xaxis = x_min + deltax * np.arange(bins_x)
-            deltay = (y_max - y_min)/(bins_y - 1)
-            yaxis = y_min + deltay * np.arange(bins_y)
+            xaxis = myFile[key].axis(axis=0).edges()[:-1]
+            yaxis = myFile[key].axis(axis=1).edges()[:-1]
 
+            x_min = min(xaxis)
+            x_max = max(xaxis)
+            y_min = min(yaxis)
+            y_max = max(yaxis)
+        
             # fill 2d matrice with inverted y-axis
-            arr_object = np.flip(myFile[key].values, 1)
+            arr_object = np.flip(myFile[key].counts(False), 1)
 
 # upper boundary for range of vertical values selected for the projection - initial values = full
 # vertical range

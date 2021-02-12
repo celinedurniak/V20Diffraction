@@ -6,7 +6,7 @@ https://root.cern.ch/root/html534/guides/users-guide/InstallandBuild.html#instal
 But here, in order to be able to use Python3 as well, we will create a conda environment using
 [`uproot`](https://github.com/scikit-hep/uproot#compressed-objects-in-root-files).  
 These instructions can be used to install on MacOS, Linux and Windows. Windows' support is the
-reason why we are going to use `uproot` instead of the ROOT conda package, which is not available
+reason why we are going to use `uproot` (version 4 at least) instead of the ROOT conda package, which is not available
 on Windows.
 
 Here are the steps to follow:
@@ -20,7 +20,7 @@ Here are the steps to follow:
 
 - in a terminal, move to where you put the folder
 
-- create a conda environment using the `requirements.yml` file, by typing the following 2 lines in a
+- create a conda environment using the `requirements.yml` file, by typing the following line in a
   terminal:
     ```
     conda env create -f environment.yml
@@ -33,7 +33,7 @@ Here are the steps to follow:
 
 The created environment also contains:
 -
-   - `dress`](https://github.com/ess-dmsc-dram/dress), required for Wave-Frame Multiplication
+   - [`dress`](https://github.com/ess-dmsc-dram/dress), required for Wave-Frame Multiplication
     stitching
 
    - `Pillow` required to convert datasets stored in ROOT files to tiff images,

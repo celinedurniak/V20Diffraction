@@ -76,17 +76,17 @@ for key_spectrum in dict_root_files.keys():
     # open root file
     file_to_open = os.path.join(dataconfig.data_root, ROOTfile)
     with uproot.open(file_to_open)[dir_with_data] as myFile:
-        for key in myFile.keys():
+        for key, value in myFile.iterclassnames(): 
 
             if key_spectrum == 'Spectrum09' and ('1D3' in str(key) or 'FINISHED' in str(key)):
                 continue
 
             # 1D line plot
-            if 'TH1I' in str(myFile[key]):
+            if 'TH1I' in str(value):
                 # do not consider problematic dataset in Spectrum09
 
-                key_name = myFile[key].name.decode('utf-8')
-                arr_object = myFile[key].values
+                key_name = myFile[key].name
+                arr_object = myFile[key].counts(False)
 
                 # naming of outputs - the extension will be added once the format
                 # is chosen (.png or .dat for 1D data)
@@ -107,30 +107,28 @@ for key_spectrum in dict_root_files.keys():
                     np.savetxt(name_output_file + '.dat', arr_object, fmt="%d")
 
             # 2D contourplot
-            elif 'TH2' in str(myFile[key]):
-                key_name = myFile[key].name.decode('utf-8')
-
-                # extract info about x, y axis (min, max and number of bins)
-                x_min = myFile[key].xlow
-                x_max = myFile[key].xhigh
-                bins_x = myFile[key].xnumbins
-                y_min = myFile[key].ylow
-                y_max = myFile[key].yhigh
-                bins_y = myFile[key].ynumbins
+            elif 'TH2' in str(value):
+                key_name = myFile[key].name
 
                 # create x- and y-axis
-                xaxis = x_min + (x_max - x_min) / (bins_x - 1) * np.arange(bins_x)
-                yaxis = y_min + (y_max - y_min) / (bins_y - 1) * np.arange(bins_y)
+                xaxis = myFile[key].axis(axis=0).edges()[:-1]
+                yaxis = myFile[key].axis(axis=1).edges()[:-1]
+
+                # extract info about x, y axis (min, max and number of bins)
+                x_min = min(xaxis)
+                x_max = max(xaxis)
+                y_min = min(yaxis)
+                y_max = max(yaxis)
 
                 # invert y axis
                 if tag_invert_y:
-                    arr_object = np.flip(myFile[key].values, 1)
+                    arr_object = np.flip(myFile[key].counts(False), 1)
                     # add info about inverted y axis to name of outputs - the extension will be
                     # added later
                     name_output_file = ROOTfile[:10] + '_' + key_name.replace(',', '_') + '_inv_y'
                 # keep original orientation
                 else:
-                    arr_object = myFile[key].values
+                    arr_object = myFile[key].counts(False)
                     # name of outputs - the extension will be added later
                     name_output_file = ROOTfile[:10] + "_" + key_name.replace(',', '_')
 

@@ -44,6 +44,6 @@ with uproot.open(file_to_open)[dir_with_data] as myFile:
     for key in myFile.keys():
         if 'BoardParam_run' in str(key):
             myObject = myFile[key]
-            nb_xbins = myObject.numbins
+            nb_xbins = int(myObject.member('fEntries'))
             for i in range(nb_xbins):
-                print(f"{myObject.xlabels[i]}: {myObject.values[i]}")
+                print(f"{myObject.axis(axis=0).labels()[i]}: {myObject.counts(False)[i]}")

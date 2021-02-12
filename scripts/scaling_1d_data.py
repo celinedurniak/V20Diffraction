@@ -54,9 +54,10 @@ assert os.path.isfile(path_to_root_file), 'There is an issue with the chosen ROO
 data_to_load = 'H_TOF_dsp_after_run_3'
 
 with uproot.open(path_to_root_file)['Meas_3'] as myFile:
-    for key in myFile.keys():
-        if 'TH1I' in str(myFile[key]) and data_to_load in str(myFile[key]):
-            y_root = myFile[key].values
+    for key, value in myFile.iterclassnames():
+        # 1D line plot
+        if 'TH1I' in str(value) and data_to_load in str(key): 
+            y_root = myFile[key].counts(False)
 
 x_root = np.arange(len(y_root))
 line_root, = ax.plot(x_root, y_root, label='root', color=colors_curves[1])
