@@ -1,13 +1,13 @@
-This folder contains Python scripts and Jupyter notebooks to plot and manipulate
+This folder contains Jupyter notebooks to plot and manipulate
 data recorded at V20 in February 2018, when diffraction experiments were performed.
 
-There are different ways to use ROOT. Installation instructions can be found at
-https://root.cern.ch/root/html534/guides/users-guide/InstallandBuild.html#installing-precompiled-binaries.  
+There are different ways to use ROOT. Installation instructions can be found 
+[here](https://root.cern.ch/root/html534/guides/users-guide/InstallandBuild.html#installing-precompiled-binaries).  
 But here, in order to be able to use Python3 as well, we will create a conda environment using
 [`uproot`](https://github.com/scikit-hep/uproot#compressed-objects-in-root-files).  
 These instructions can be used to install on MacOS, Linux and Windows. Windows' support is the
-reason why we are going to use `uproot` (version 4 at least) instead of the ROOT conda package, which is not available
-on Windows.
+reason for using `uproot` (version 4 at least) instead of the ROOT conda package, 
+which is not available on Windows.
 
 Here are the steps to follow:
 
@@ -20,7 +20,7 @@ Here are the steps to follow:
 
 - in a terminal, move to where you put the folder
 
-- create a conda environment using the `requirements.yml` file, by typing the following line in a
+- create a conda environment using the `environment.yml` file, by typing the following line in a
   terminal:
     ```
     conda env create -f environment.yml
@@ -33,7 +33,7 @@ Here are the steps to follow:
 
 The created environment also contains:
 -
-   - [`dress`](https://github.com/ess-dmsc-dram/dress), required for Wave-Frame Multiplication
+   - [`ess`](https://scipp.github.io/ess/), required for Wave-Frame Multiplication
     stitching
 
    - `Pillow` required to convert datasets stored in ROOT files to tiff images,
@@ -43,9 +43,8 @@ The created environment also contains:
     [link](https://github.com/PaNOSC-ViNYL/McStasScript).
 
 
-You can now use either Python scripts or Jupyter notebooks. The next step is to specify the path
-to the different datafiles by running `make_config.py` either in the `scripts` folder or the
-`notebooks` one. In the terminal where your conda environment is activated, type the following
+You can now use the Jupyter notebooks. The next step is to specify the path
+to the different datafiles by running `make_config.py` either in the `notebooks` folder. In the terminal where your conda environment is activated, type the following
 commands, if you want to use the notebooks:
 
    ```
@@ -62,9 +61,6 @@ You will be asked to enter different absolute paths respectively to:
 
 Simply press `Enter` if you do not have such types of files. The output is written in a
 `dataconfig.py`, which is imported in the notebooks to get access the datafiles' contents.
-
-If you prefer using Python scripts, simply go to the `scripts` folder and run `make_config.py`
-before using any of the Python scripts located in the folder.
 
 You can also directly create a `dataconfig.py` by hand. Its content is  
 
@@ -96,7 +92,7 @@ If you do not have any particular type of datafiles, leave an empty quote `""`.
 
       * activate your conda environment (if it is not already the case)
       * move to where your Python script is located
-        (*i.e.* typing `cd path_to_where_your_python_script_is`)
+        (*i.e.*, typing `cd path_to_where_your_python_script_is`)
       * type `python name_of_python_script.py`
 
    Note that you will have to edit the script to specify the path where the data (ROOT file,
@@ -115,73 +111,27 @@ If you do not have any particular type of datafiles, leave an empty quote `""`.
 
 **Content of the folder**:
 
-For different aspects of the data treatment, Python scripts and/or Jupyter notebooks are provided.
+For different aspects of the data treatment, Jupyter notebooks are provided:
 
-|  Actions performed                              | Python script                     | Jupyter notebook                     |
-|:------------------------------------------------|:--------------------------------- | :----------------------------------- |
-| run McStas simulation                           | `run_mcstas_sim.py`+              | `Run_McStas_simulation.ipynb`+       |
-| plot McStas output datafiles                    | `plot_mcstas_output.py`+          | `Plot_McStas_output.ipynb`+          |
-| plot ascii files from He3 tubes                 | `plot_he3_data.py`                | `Plot_He3_data.ipynb`                |
-| plot all ROOT files                             | `plot_all_root_data.py`*          | `ROOTfile_metadata_and_plots.ipynb`* |
-| display metadata stored in a selected ROOT file | `display_metadata_root.py`        | `ROOTfile_metadata_and_plots.ipynb`* |
-| plot and compare data from He3, ROOT and McStas | `scaling_1d_data.py`              | `Plot_ROOT_He3_McStas.ipynb`+        |
-| calculate and display projection of 2D data     | `projection_2D.py`                |                                      |
-| generate tif, dat, png from ROOT files          | `plot_all_root_data.py`*          | `ROOTfile_metadata_and_plots.ipynb`* |
-| open and display tif, dat, png from ROOT files  | `open_tiff_png_dat_from_ROOT.py`* | `Open_tiff_png_dat_from_ROOT.ipynb`* |
-| compare 2D data from ROOT and McStas            |                                   | `Compare_2D_datasets.ipynb`          |
-| perform WFM stitching on ROOT and Mcstas data   |                                   |  `WFM_Stitching_2D.ipynb`            |
-| compare 1D projections from 2D ROOT and Mcstas data |                               | `Projection_2D.ipynb`                |
+| Actions performed                                   | Jupyter notebook                     |
+|:----------------------------------------------------|:-------------------------------------|
+| run McStas simulation                               | `Run_McStas_simulation.ipynb`+       |
+| plot McStas output datafiles                        | `Plot_McStas_output.ipynb`+          |
+| plot ascii files from He3 tubes                     | `Plot_He3_data.ipynb`                |
+| plot all ROOT files                                 | `ROOTfile_metadata_and_plots.ipynb`* |
+| display metadata stored in a selected ROOT file     | `ROOTfile_metadata_and_plots.ipynb`* |
+| plot and compare data from He3, ROOT and McStas     | `Plot_ROOT_He3_McStas.ipynb`+        |
+| calculate and display projection of 2D data         | `projection_2D.py`                   |
+| generate tif, dat, png from ROOT files              | `ROOTfile_metadata_and_plots.ipynb`* |
+| open and display tif, dat, png from ROOT files      | `Open_tiff_png_dat_from_ROOT.ipynb`* |
+| compare 2D data from ROOT and McStas                | `Compare_2D_datasets.ipynb`          |
+| perform WFM stitching on ROOT and Mcstas data       | `WFM_Stitching_2D.ipynb`             |
+| compare 1D projections from 2D ROOT and Mcstas data | `Projection_2D.ipynb`                |
 
 
-Legend of the table: * : requires PIL , + : requires McstasScript  
+Legend of the table: * : requires PIL and + : requires McstasScript  
 
 Here are short descriptions about these documents:
-
-- `plot_mcstas_output.py`
-   Python script to plot output data of McStas simulation. Two approaches are presented:
-       - using `McStasScript`
-       - using `matplotlib`
-   Edit the script to specify the path where you McStas `.instr` model is located on your machine
-
-- `plot_he3_data.py`
-   Python script to plot ascii files from He3 tubes (after rebinning)
-
-- `display_metadata_root.py`
-   Python script to display metadata stored in a selected ROOT file
-
-- `open_tiff_png_dat_from_ROOT.py`
-   Python script to open and display `.dat`, `.png`, `.tiff` files of 1D and 2D datasets, originally
-   stored in ROOT files
-
-- `plot_all_root_data.py`
-   Python script to plot all graphs stored in a ROOT file. There are options to save 1D datasets as
-   .dat or .png and 2D datasets as .dat, .png or .tiff files. For 2D, the user can also choose to
-   invert the y-axis.
-
-- `projection_2D.py`
-   Python script to calculate 1D projection of selected portion of 2D contourplot.
-   Please note that the y-axis of the 2D plot is inverted. The initial projection displayed
-   corresponds to the whole y-range.
-   The user can select the range of values to use to calculate the projection.
-   To select a subsection, click on the 2D plot and move the mouse until you reach the desired
-   width. Release the mouse button.
-   The projection will be updated, the values of `ymin` and `ymax` displayed and an output file
-   `projection1D.out` will save the projection (1 column). This file also contains in its header
-   metadata about the ROOT file, the dataset used and the minimum and maximum values of y-values for
-   the projection.
-   For example, the first few lines of this file can look like this:
-   ```bash
-     # root file: Spectrum03_DENEX006_1_18-02-05_0000.root, dataset: H_TOF,X1-X2_User_2D2_dsp_after_run_3 ymin: -512.0, ymax: 2184.1012658227846
-     131.0000
-     138.0000
-     137.0000
-   ```
-- `run_mcstas_sim.py`
-   Python script to run a McStas simulation using McStasScript.
-
-- `scaling_1d_data.py`
-   Python script which allows affine scaling of x- and y- axes of selected 1D datasets from ROOT,
-   McStas and He3 tubes
 
 - `Compare_2D_datasets.ipynb`
    Notebook to compare 2D data from ROOT and McStas. The data are cropped, resampled to the coarser
